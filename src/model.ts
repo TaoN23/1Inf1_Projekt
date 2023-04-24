@@ -3,7 +3,7 @@ import { View } from "./view";
 export interface Board{
     addSprite(sprite: Sprite, x: number, y: number): Function;
 }
-interface Sprite {}
+export interface Sprite {}
 
 
 export class Model {
@@ -11,7 +11,7 @@ export class Model {
     views: Array<View> = [];
     sprites: Array<Sprite> = [];
 
-    constructor(private board: Board){
+    constructor(private level: Level){
 
     }
 
@@ -20,7 +20,7 @@ export class Model {
     }
 
     public addSprite(sprite: Sprite, x: number, y: number){
-        this.board.addSprite(sprite, x, y);
+        this.level.addSprite(sprite, x, y);
     }
     
 

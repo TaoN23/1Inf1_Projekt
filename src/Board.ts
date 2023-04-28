@@ -1,19 +1,24 @@
+import { Sprite } from "./model";
+import { SpriteTypes, thing } from "./Sprites";
+import { baba } from "./Sprites";
+
+
 interface LevelString {
     meta: {},
     board: RawBoard;
 }
 
-class Level {
+export class Level {
     
     private board: Board;
 
     constructor(private levelString: LevelString,){
-        this.board = new Board(levelString.board);
+        this.board = new Board(this.levelString.board);
     }
 
 
-    public addSprite(){
-        
+    public addSprite(sprite: Sprite, x: number, y: number){
+        this.board.addSprite(sprite, x, y);
     }
 }
 
@@ -22,23 +27,46 @@ interface RawBoard {
     rawBoard: Array<string>
 }
 
+type ModelBoard = Array<Array<Array<Sprite>>>;
 
 class Board {
 
-    board: Array<Array<Array<Object>>>;
+    board: ModelBoard;
 
     constructor(private rawBoard: RawBoard) {
-        this.board = this.parseBoard();
+        this.board = this.parseBoard(this.rawBoard);
     }
 
-    private parseBoard(): Array<Array<Array<Object>>> {
+     private parseBoard(shortcut: String ): ModelBoard {
         // TODO: Parse Logic 
+        //this.board[y][x][length] = {x: 0, y: 0, width: 20, height: 20, type: SpriteTypes.WALL};
+        
+        for (i: number , i )
+
+
+        switch(shortcut) {
+            case 'w' : 
+            
+
+
+        }
+        
+
+
+
+
+
+
+
+        
         return [[[{}]]]
     }
 
-    public addSprite() {
-
+    public addSprite(sprite: Sprite, x: number, y: number) {
+        const length = this.board[y][x].length;
+        this.board[y][x][length] = sprite;
     }
+
 
 
 }

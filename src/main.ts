@@ -1,5 +1,5 @@
 let foo =[
-  [[], []], 
+  [[{x, y, type,}], []], 
   [[], []],
   [[], [2]],
 ]
@@ -13,6 +13,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 let level = {
  meta: {},
  board: [
-  '#####'
+  '#####',
+  '#####',
  ] 
 }

@@ -41,8 +41,16 @@ class Board {
         // TODO: Parse Logic 
         //this.board[y][x][length] = {x: 0, y: 0, width: 20, height: 20, type: SpriteTypes.WALL};
         
-        for (i: number , i )
 
+        	for (let index: = 0; index < array.length; index:++) {
+                const element = array[index:];
+                
+
+
+
+
+                
+            }
 
         switch(shortcut) {
             case 'w' : 
@@ -62,9 +70,14 @@ class Board {
         return [[[{}]]]
     }
 
+    private addSpriteData(x: number, y: number, width: number, height: number, type: SpriteTypes){
+        const length = this.board[y][x].length;
+        this.board[y][x][length] = {x, y, width_p: width, height_p: height, type};
+    }
+
     public addSprite(sprite: Sprite, x: number, y: number) {
         const length = this.board[y][x].length;
-        this.board[y][x][length] = sprite;
+        this.board[y][x][length].reference = sprite;
     }
 
 

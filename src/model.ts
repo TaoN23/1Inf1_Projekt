@@ -11,8 +11,8 @@ interface ViewOBJ{};
 export interface Sprite {
     x: number;
     y: number;
-    width: number;
-    height: number;
+    width_p: number;
+    height_p: number;
     type: SpriteTypes;
     reference?: ViewOBJ;
 }

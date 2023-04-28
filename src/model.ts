@@ -1,9 +1,21 @@
+import { Level } from "./Board";
+import { SpriteTypes } from "./Sprites";
 import { View } from "./view";
 
 export interface Board{
     addSprite(sprite: Sprite, x: number, y: number): Function;
 }
-export interface Sprite {}
+
+interface ViewOBJ{};
+
+export interface Sprite {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+    type: SpriteTypes;
+    reference?: ViewOBJ;
+}
 
 
 export class Model {

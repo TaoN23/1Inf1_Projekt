@@ -1,9 +1,10 @@
+import { Level } from './Board';
 import { Board, Model } from './model'
 import { View } from './view';
 
 export class Controller{
 
-    levels: Array<Board> = [];
+    levels: Array<Level> = [];
     model: Model;
     view: View;
 

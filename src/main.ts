@@ -13,7 +13,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 let level = {
  meta: {},
  board: [
-  '##[#,#]###',
-  '#####',
+  '#w###',
+  '##[wb]##',
  ] 
 }

@@ -5,7 +5,9 @@ export class thing{
 } 
 
 export enum SpriteTypes {
-    WALL
+    VOID,
+    WALL,
+    BABA
 }
 
 export class baba extends thing{

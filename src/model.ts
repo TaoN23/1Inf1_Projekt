@@ -9,11 +9,15 @@ export interface Board{
 interface ViewOBJ{};
 
 export interface Sprite {
+    // relative Koordinaten im view-model
     x: number;
     y: number;
+    // view höhe und breite, müssen berechnet werden
     width_p: number;
     height_p: number;
+    // Textur
     type: SpriteTypes;
+    // Referenz auf das View Objekt
     reference?: ViewOBJ;
 }
 

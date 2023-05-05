@@ -1,11 +1,6 @@
 import { Sprite } from "./model";
 import { SpriteTypes } from "./Sprites";
 
-const rb = [
-    '####b####',
-    'www###ww#',
-    '##[#w]######',
-  ]
 
 interface LevelString {
     meta: {},
@@ -45,18 +40,15 @@ export class Board {
 
             for (let row: number = 0; row < leveldata.length; row++) {
                 let delayCounter = 0;
-                console.log(leveldata[row]);
 
                 column_loop:
                 for (let column: number = 0; column < leveldata[row].length; column++) {      
                                   
                                        
                     if(leveldata[row].at(column) === '[') {
-                        
                         column++;
                         
-                        for (let z = 1; true; z++) {
-                            
+                        while(true) {
                             delayCounter++;
                             if (leveldata[row].at(column)==']') {
                                 
@@ -67,8 +59,6 @@ export class Board {
                             // @ts-expect-error
                             this.addSpriteData(column - delayCounter, row, 20, 20, shortcutMap[leveldata[row].at(column)]);
                          
-                            
-
                             column++;
 
                         }
@@ -78,9 +68,7 @@ export class Board {
                     this.addSpriteData(column - delayCounter, row, 20, 20, shortcutMap[leveldata[row].at(column)]);
                 }
 
-
             }
-
     }
 
     private addSpriteData(x: number, y: number, width: number, height: number, type: SpriteTypes){
@@ -112,9 +100,7 @@ export class Board {
 
     //     }
     // }
-
-
-
+ 
 }
 
 const shortcutMap = {

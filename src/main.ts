@@ -4,7 +4,9 @@ const rb = [
   '####b####',
   'www###ww#',
   '##[#w]######',
+  '####[#www]##[w##w]#',
 ]
+
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   hello world

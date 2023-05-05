@@ -1,5 +1,5 @@
 import { Level } from './Board';
-import { Board, Model } from './model'
+import { Model } from './model'
 import { View } from './view';
 
 export class Controller{

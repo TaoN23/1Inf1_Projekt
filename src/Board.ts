@@ -1,6 +1,6 @@
 import { Sprite } from "./model";
-import { SpriteTypes, thing } from "./Sprites";
-import { baba } from "./Sprites";
+import { SpriteTypes } from "./Sprites";
+
 
 
 interface LevelString {

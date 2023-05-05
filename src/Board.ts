@@ -1,7 +1,11 @@
 import { Sprite } from "./model";
 import { SpriteTypes } from "./Sprites";
 
-
+const rb = [
+    '####b####',
+    'www###ww#',
+    '##[#w]######',
+  ]
 
 interface LevelString {
     meta: {},
@@ -23,56 +27,50 @@ export class Level {
 }
 
 
-type ModelBoard = Array<Array<Array<Sprite>>>;
+type ModelBoard = Array<Array<Array<Sprite>>> ;
 
-class Board {
+export class Board {
 
     board: ModelBoard = [];
 
     constructor(private rawBoard: Array<string>) {
         this.parseBoard(this.rawBoard);
+        console.log(this.board);
+        
     }
 
      private parseBoard(leveldata: String[] ): void {
         // TODO: Parse Logic 
         //this.board[y][x][length] = {x: 0, y: 0, width: 20, height: 20, type: SpriteTypes.WALL};
-        
-            let x: number = 0;
-            let z: number;
-            
+
             for (let row: number = 0; row < leveldata.length; row++) {
 
 
                 for (let column: number = 0; column < leveldata[row].length; column++) {                    
-
                                        
-                    if ( leveldata.at(column) == '[') {
+                    if(leveldata[row].at(column) === '[') {
                         
                         column++;
  
-                        for (z = 0; z > -1; z++) {
+                        for (let z = 0; true; z++) {
 
-                            // @ts-expect-error
-                            this.addSpriteData(x, row, 20, 20, shortcutMap[leveldata.at(column)]);
-                         
-                            
-                            if (leveldata.at(column)==']') {
+                            if (leveldata[row].at(column)==']') {
                                 
                                 break;
 
                             }
+                            // @ts-expect-error
+                            this.addSpriteData(column - z, row, 20, 20, shortcutMap[leveldata[row].at(column)]);
+                         
+                            
 
                             column++;
 
                         }
 
                     }
-
-                    z = 0;
                     //@ts-expect-error
-                    this.addSpriteData(x, row, 20, 20, shortcutMap[leveldata.at(column)]);
-                    x++;
-
+                    this.addSpriteData(column, row, 20, 20, shortcutMap[leveldata[row].at(column)]);
                 }
 
 
@@ -81,8 +79,11 @@ class Board {
     }
 
     private addSpriteData(x: number, y: number, width: number, height: number, type: SpriteTypes){
-        const length = this.board[y][x].length;
-        this.board[y][x][length] = {x, y, width_p: width, height_p: height, type};
+        if (!this.board[y])
+            this.board[y] = [];
+        if (!this.board[y][x])
+            this.board[y][x] = [];
+        this.board[y][x].push({x: y, y: x, width_p: width, height_p: height, type});
     }
 
 
@@ -92,6 +93,10 @@ class Board {
         this.board[y][x][length].reference = sprite;
     }
 
+    public log(){
+        console.log(JSON.stringify(this.board));
+
+    }
 
     // public getSprite( shortcut: String , x: number , y: number , z: number){
     //     switch (shortcut) {

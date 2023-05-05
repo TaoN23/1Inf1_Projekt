@@ -1,19 +1,16 @@
-let foo =[
-  [[{x, y, type,}], []], 
-  [[], []],
-  [[], [2]],
+import { Board } from "./Board"
+
+const rb = [
+  '####b####',
+  'www###ww#',
+  '##[#w]###',
 ]
 
-console.log(foo[2][1][0]);
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   hello world
 `
 '#####P######'
 
-let level = {
- meta: {},
- board: [
-  '#w###',
-  '##[wb]##',
- ] 
-}
+
+const b = new  Board(rb);
+b.log();

@@ -44,23 +44,28 @@ export class Board {
         //this.board[y][x][length] = {x: 0, y: 0, width: 20, height: 20, type: SpriteTypes.WALL};
 
             for (let row: number = 0; row < leveldata.length; row++) {
+                let delayCounter = 0;
+                console.log(leveldata[row]);
 
-
-                for (let column: number = 0; column < leveldata[row].length; column++) {                    
+                column_loop:
+                for (let column: number = 0; column < leveldata[row].length; column++) {      
+                                  
                                        
                     if(leveldata[row].at(column) === '[') {
                         
                         column++;
- 
-                        for (let z = 0; true; z++) {
-
+                        
+                        for (let z = 1; true; z++) {
+                            
+                            delayCounter++;
                             if (leveldata[row].at(column)==']') {
                                 
-                                break;
-
+                                continue column_loop;
+                                
                             }
+                            console.log(leveldata[row].at(column));
                             // @ts-expect-error
-                            this.addSpriteData(column - z, row, 20, 20, shortcutMap[leveldata[row].at(column)]);
+                            this.addSpriteData(column - delayCounter, row, 20, 20, shortcutMap[leveldata[row].at(column)]);
                          
                             
 
@@ -70,7 +75,7 @@ export class Board {
 
                     }
                     //@ts-expect-error
-                    this.addSpriteData(column, row, 20, 20, shortcutMap[leveldata[row].at(column)]);
+                    this.addSpriteData(column - delayCounter, row, 20, 20, shortcutMap[leveldata[row].at(column)]);
                 }
 
 
@@ -83,7 +88,7 @@ export class Board {
             this.board[y] = [];
         if (!this.board[y][x])
             this.board[y][x] = [];
-        this.board[y][x].push({x: y, y: x, width_p: width, height_p: height, type});
+        this.board[y][x].push({x, y, width_p: width, height_p: height, type});
     }
 
 

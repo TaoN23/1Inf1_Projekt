@@ -1,4 +1,4 @@
-import { Board } from "./Board"
+import { Controller } from "./controler"
 
 const rb = [
   '####b####',
@@ -13,6 +13,4 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 `
 '#####P######'
 
-
-const b = new  Board(rb);
-b.log();
+new Controller();

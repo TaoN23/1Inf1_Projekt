@@ -1,10 +1,7 @@
-import { Level } from "./Board";
+import { Board, Level } from "./Board";
 import { SpriteTypes } from "./Sprites";
 import { View } from "./view";
 
-export interface Board{
-    addSprite(sprite: Sprite, x: number, y: number): Function;
-}
 
 interface ViewOBJ{};
 
@@ -26,9 +23,12 @@ export class Model {
 
     views: Array<View> = [];
     sprites: Array<Sprite> = [];
+    boardModel: Board;
 
     constructor(private level: Level){
-
+        this.boardModel = new Board(this.level.levelString);
+        console.log(this.boardModel);
+        
     }
 
     public addView(view: View){
@@ -36,7 +36,7 @@ export class Model {
     }
 
     public addSprite(sprite: Sprite, x: number, y: number){
-        this.level.addSprite(sprite, x, y);
+        this.boardModel.addSprite(sprite, x, y);
     }
     
 

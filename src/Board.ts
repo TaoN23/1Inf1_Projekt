@@ -2,23 +2,9 @@ import { Sprite } from "./model";
 import { SpriteTypes } from "./Sprites";
 
 
-interface LevelString {
-    meta: {},
-    board: Array<string>;
-}
-
-export class Level {
-    
-    private board: Board;
-
-    constructor(private levelString: LevelString,){
-        this.board = new Board(this.levelString.board);
-    }
-
-
-    public addSprite(sprite: Sprite, x: number, y: number){
-        this.board.addSprite(sprite, x, y);
-    }
+export interface Level {
+    levelString: Array<string>;
+    meta: Object;
 }
 
 
@@ -26,10 +12,10 @@ type ModelBoard = Array<Array<Array<Sprite>>> ;
 
 export class Board {
 
-    board: ModelBoard = [];
+    private board: ModelBoard = [];
 
-    constructor(private rawBoard: Array<string>) {
-        this.parseBoard(this.rawBoard);
+    constructor(rawBoard: Array<string>) {
+        this.parseBoard(rawBoard);
         console.log(this.board);
         
     }

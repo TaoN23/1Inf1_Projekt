@@ -129,7 +129,11 @@ export class Board {
     }
 
 
-//    public check_right(x: number, y: number){
+    public check_right(x: number, y: number){
+
+
+        return true
+
 
    
 //     if(this.board[y][x++]== void){
@@ -148,7 +152,32 @@ export class Board {
 //     }
 
 
-//    }
+    }
+
+    public check_left(x: number, y: number){
+
+
+        return true
+    
+    }
+    
+    public check_up(x: number, y: number){
+
+
+        return true
+    
+    }
+    
+    public check_down(x: number, y: number){
+
+
+        return true
+    
+    }
+
+
+
+
 
 
 

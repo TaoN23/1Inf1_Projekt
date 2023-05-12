@@ -73,7 +73,7 @@ export class Board {
     }
 
     public log(){
-        console.log(JSON.stringify(this.board));
+        console.log(JSON.stringify(this.board[2]));
 
     }
 

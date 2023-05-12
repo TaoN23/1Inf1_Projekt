@@ -7,10 +7,6 @@ const rb = [
   '####[#www]##[w##w]#',
 ]
 
-
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  hello world
-`
 '#####P######'
 
 new Controller();

@@ -5,11 +5,11 @@ import { View } from './view';
 const firstLevel: Level = {
     meta: {},
     levelString: [
-        'wwwwwwwwwwwwwwwwwwww',
-        'w#######[#w]########ww',
-        'w#######wwww######w',
-        'w###[#b]#############w',
-        'wwwwwwwwwwwwwwwwwwww',
+        'wwwwwwwwww',
+        'w########w',
+        'w##w[#b]w###w',
+        'w########w',
+        'wwwwwwwwww',
     ]
 }
 export class Controller{
@@ -22,6 +22,7 @@ export class Controller{
         this.levels.push(firstLevel);
         this.model = new Model(this.levels[0]);
         this.view = new View(this.model);
+        this.model.boardModel.log();
     };
 
 }

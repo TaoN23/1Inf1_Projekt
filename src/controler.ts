@@ -24,4 +24,35 @@ export class Controller{
         this.view = new View(this.model);
     };
 
+
+    public move_right(x: number , y: number , z: number){
+    
+        this.model.move_right(x,y,z)
+    
+    }
+
+    public move_left(x: number , y: number , z: number){
+    
+        this.model.move_left(x,y,z)
+    
+    }
+    
+    public move_up(x: number , y: number, z: number){
+    
+       this.model.move_up(x,y,z)
+    
+    }
+    
+    public move_down(x: number , y: number , z: number){
+    
+        this.model.move_down(x,y,z)
+    
+    }
+
+
+
+
+
+
+
 }

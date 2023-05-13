@@ -88,45 +88,31 @@ export class Board {
     // }
  
 
-    public move_right(x: number , y: number){
     
-        if(this.check_right(x,y)){
-            
-            this.board[y][x] = this.board[y][x++]
-            
-        }
-    
+    public move_right(x: number, y: number, z: number){
+
+        this.board[y][x++][z] = this.board[y][x][z]
+
     }
 
-    public move_left(x: number , y: number){
-    
-        if(this.check_left(x,y)){
-            
-            this.board[y][x] = this.board[y][x--]
-            
-        }
-    
+    public move_left(x: number, y: number, z: number){
+
+        this.board[y][x--][z] = this.board[y][x][z]
+
     }
-    
-    public move_up(x: number , y: number){
-    
-        if(this.check_up(x,y)){
-            
-            this.board[y][x] = this.board[y--][x]
-            
-        }
-    
+
+    public move_up(x: number, y: number, z: number){
+
+        this.board[y--][x][z] = this.board[y][x][z]
+
     }
-    
-    public move_down(x: number , y: number){
-    
-        if(this.check_down(x,y)){
-            
-            this.board[y][x] = this.board[y++][x]
-            
-        }
-    
+
+    public move_down(x: number, y: number, z: number){
+
+        this.board[y++][x][z] = this.board[y][x][z]
+
     }
+
 
 
     public check_right(x: number, y: number){

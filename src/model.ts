@@ -1,6 +1,6 @@
 import { Board, Level } from "./Board";
 import { SpriteTypes } from "./Sprites";
-import { View } from "./view";
+import { View, ViewState } from "./view";
 
 
 interface ViewOBJ{};
@@ -25,7 +25,7 @@ export class Model {
     sprites: Array<Sprite> = [];
     boardModel: Board;
 
-    constructor(private level: Level){
+    constructor(private level: Level, public viewState: ViewState, private model: Model){
         this.boardModel = new Board(this.level.levelString);
         console.log(this.boardModel);
         
@@ -39,5 +39,27 @@ export class Model {
         this.boardModel.addSprite(sprite, x, y);
     }
     
+
+    public changeViewState(newState: ViewState): void{
+        console.log('cvs');
+        
+        if (this.viewState === newState) {
+            console.log('jsufnjkn ');
+            
+            return;
+        }
+
+        this.viewState = newState;
+        
+        this.views.forEach((view: View) => {
+            console.log('sC2');
+            console.log(view.stateChange);
+            
+            view.stateChange();
+        })
+    }
+
+
+
 
 }

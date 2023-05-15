@@ -1,6 +1,6 @@
 import { Level } from './Board';
 import { Model } from './model'
-import { View } from './view';
+import { View, ViewState } from './view';
 
 const firstLevel: Level = {
     meta: {},
@@ -20,9 +20,19 @@ export class Controller{
 
     constructor() {
         this.levels.push(firstLevel);
-        this.model = new Model(this.levels[0]);
-        this.view = new View(this.model);
-        this.model.boardModel.log();
+        this.model = new Model(this.levels[0], ViewState.START_SCREEN);
+        this.view = new View(this.model, this.model.viewState, this);
+        this.model.addView(this.view);
     };
+
+    public startGame(): void{
+        document.getElementById('startGame')?.removeEventListener('click', this.startGame);
+        console.log('sG');
+        console.log(this);
+        
+        console.log(this.model.changeViewState);
+        
+        this.model.changeViewState(ViewState.GAME_SCREEN);
+    }
 
 }

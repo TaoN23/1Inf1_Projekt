@@ -1,5 +1,6 @@
 import { Controller } from "./controler"
 
+
 const rb = [
   '####b####',
   'www###ww#',
@@ -14,3 +15,6 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 '#####P######'
 
 new Controller();
+
+
+

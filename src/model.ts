@@ -6,6 +6,10 @@ import { View } from "./view";
 interface ViewOBJ{};
 
 export interface Sprite {
+   
+   
+   
+
     // relative Koordinaten im view-model
     x: number;
     y: number;
@@ -16,6 +20,24 @@ export interface Sprite {
     type: SpriteTypes;
     // Referenz auf das View Objekt
     reference?: ViewOBJ;
+
+
+
+    // getType: function () {
+    //     return this.type
+    // }
+
+
+    // public get_x(){
+
+    //     if(type == spritetype){
+
+    //         return x
+
+    //     }
+
+    // }
+
 }
 
 
@@ -39,5 +61,94 @@ export class Model {
         this.boardModel.addSprite(sprite, x, y);
     }
     
+
+    public move_right(x: number , y: number , z: number){
+          
+            this.boardModel.setter(this.boardModel.getter(x++,y,z), this.boardModel.getter(x,y,z))
+               
+    }
+
+    public move_left(x: number , y: number , z: number){
+          
+            this.boardModel.setter(this.boardModel.getter(x--,y,z), this.boardModel.getter(x,y,z))
+
+    }
+    
+    public move_up(x: number , y: number, z: number){
+                
+            this.boardModel.setter(this.boardModel.getter(x,y--,z), this.boardModel.getter(x,y,z))
+                
+    }
+    
+    public move_down(x: number , y: number , z: number){
+           
+            this.boardModel.setter(this.boardModel.getter(x,y++,z), this.boardModel.getter(x,y,z))
+            
+    }
+
+
+
+
+    public get_right(x: number, y: number, z?: number){
+
+        if(z){
+
+           return this.boardModel.getter(x++, y, z)
+
+        }
+
+       return this.boardModel.getter(x++,y)
+
+    }
+
+    public get_left(x: number, y: number, z?: number){
+
+        if(z){
+
+           return this.boardModel.getter(x--, y, z)
+
+        }
+
+       return this.boardModel.getter(x--,y)
+
+    }
+
+    public get_up(x: number, y: number, z?: number){
+
+        if(z){
+
+           return this.boardModel.getter(x, y--, z)
+
+        }
+
+       return this.boardModel.getter(x,y--)
+
+    }
+
+    public get_down(x: number, y: number, z?: number){
+
+        if(z){
+
+           return this.boardModel.getter(x, y++, z)
+
+        }
+
+       return this.boardModel.getter(x,y++)
+
+    }
+
+
+    public sprite_right(spritetype: SpriteTypes){
+
+        if(spritetype==this.sprites.)
+        
+        
+        
+        
+        this.boardModel.getter(sprite.get_x(spritetype))
+
+    }
+
+
 
 }

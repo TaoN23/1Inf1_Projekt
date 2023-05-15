@@ -89,71 +89,76 @@ export class Board {
  
 
    
-    public get_right(x: number, y: number){
+    // public get_right(x: number, y: number, z?: number){
 
-        if(this.board[y][x++]!= undefined){
+    //     if(z){
 
-            return null;
-        } 
+    //         return this.board[y][x++][z]
+
+    //     }
+
+    //     return this.board[y][x++]
+
+    // }
+
+
+    // public get_left(x: number, y: number, z?: number){
+
+    //     if(this.board[y][x--]!= undefined){
+
+    //         return null;
+    //     } 
         
         
-        return this.board[y][x++]
+    //     return this.board[y][x--]
+    
+    // }
+    
+    // public get_up(x: number, y: number, z?: number){
+
+
+    //     if(this.board[y--][x]!= undefined){
+
+    //         return null;
+    //     } 
+        
+        
+    //     return this.board[y--][x]
+    
+    // }
+    
+    // public get_down(x: number, y: number, z?: number){
+
+
+    //     if(this.board[y++][x]!= undefined){
+
+    //         return null;
+    //     } 
+        
+        
+    //     return this.board[y++][x]
+    
+    // }
+
+
+    public getter(x: number , y: number , z?: number){
+
+        if(z){
+
+            return this.board[y][x][z]
+
+        }
+        
+        return this.board[y][x]
 
     }
 
 
-    public get_left(x: number, y: number){
-
-        if(this.board[y][x--]!= undefined){
-
-            return null;
-        } 
-        
-        
-        return this.board[y][x--]
-    
-    }
-    
-    public get_up(x: number, y: number){
-
-
-        if(this.board[y--][x]!= undefined){
-
-            return null;
-        } 
-        
-        
-        return this.board[y--][x]
-    
-    }
-    
-    public get_down(x: number, y: number){
-
-
-        if(this.board[y++][x]!= undefined){
-
-            return null;
-        } 
-        
-        
-        return this.board[y++][x]
-    
-    }
-
-
-    public getter(x: number , y: number , z: number){
-
-        return this.board[y][x][z]
-
-    }
-
-
-    public setter(a: Board, b: Board){
+    public setter(a: Sprite, b: Sprite){
         
         a=b
 
     }
-
 
 
 

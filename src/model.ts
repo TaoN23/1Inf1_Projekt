@@ -25,7 +25,7 @@ export class Model {
     sprites: Array<Sprite> = [];
     boardModel: Board;
 
-    constructor(private level: Level, public viewState: ViewState, private model: Model){
+    constructor(private level: Level, public viewState: ViewState){
         this.boardModel = new Board(this.level.levelString);
         console.log(this.boardModel);
         

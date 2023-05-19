@@ -25,7 +25,7 @@ export class Model {
     sprites: Array<Sprite> = [];
     boardModel: Board;
 
-    constructor(private level: Level, public viewState: ViewState){
+    constructor(private level: Level, private viewState: ViewState){
         this.boardModel = new Board(this.level.levelString);
         console.log(this.boardModel);
         
@@ -59,7 +59,13 @@ export class Model {
         })
     }
 
+    public getViewState(): ViewState{
+        return this.viewState;
+    }
 
+    public getLevelMeta(){
+        return this.level.meta;
+    }
 
 
 }

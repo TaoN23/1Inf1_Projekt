@@ -1,4 +1,6 @@
 import { Controller } from "./controler"
+import './style.css'
+
 
 const rb = [
   '####b####',

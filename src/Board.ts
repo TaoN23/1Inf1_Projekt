@@ -4,7 +4,10 @@ import { SpriteTypes } from "./Sprites";
 
 export interface Level {
     levelString: Array<string>;
-    meta: Object;
+    meta: {
+        height: number;
+        width: number;
+    };
 }
 
 

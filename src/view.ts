@@ -3,13 +3,14 @@ import { Model } from "./model";
 
 
 export class View {
-    canvas: HTMLCanvasElement | null = null;
+    canvas: HTMLCanvasElement | undefined;
     appRef: HTMLElement;
+    spriteSize: number | undefined;
 
-    constructor(private model: Model, private state: ViewState, private controller: Controller){
+    constructor(private model: Model, private controller: Controller){
         //this.canvas = this.createCanvas();    
         this.appRef = document.getElementById('app')!;
-        if (state === ViewState.START_SCREEN) {
+        if (model.getViewState() === ViewState.START_SCREEN) {
             this.setupStartScreen();
         }
     }
@@ -18,10 +19,13 @@ export class View {
         this.createCanvas();
     }
     
-    private createCanvas(): HTMLCanvasElement{
+    private createCanvas(): void{
         this.canvas = document.createElement("canvas");
-        document.body.appendChild(this.canvas);
-        return this.canvas
+        this.appRef.appendChild(this.canvas);
+        this.appRef.requestFullscreen();
+        this.spriteSize = this.controller.calculateSpriteSize();
+        this.canvas.style.width = (this.model.getLevelMeta().width * this.spriteSize).toString() + 'px';
+        this.canvas.style.height = (this.model.getLevelMeta().height * this.spriteSize).toString + 'px';
     }
     
     setupStartScreen(): void{
@@ -32,9 +36,9 @@ export class View {
     }
 
     stateChange(): void{
-        console.log(this.state);
+        console.log(this.model.getViewState());
         
-        if (this.state === ViewState.GAME_SCREEN) {
+        if (this.model.getViewState() === ViewState.GAME_SCREEN) {
            this.clearView();
            this.setupGame(); 
            return; 

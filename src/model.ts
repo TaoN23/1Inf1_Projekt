@@ -41,20 +41,13 @@ export class Model {
     
 
     public changeViewState(newState: ViewState): void{
-        console.log('cvs');
-        
         if (this.viewState === newState) {
-            console.log('jsufnjkn ');
-            
             return;
         }
 
         this.viewState = newState;
         
         this.views.forEach((view: View) => {
-            console.log('sC2');
-            console.log(view.stateChange);
-            
             view.stateChange();
         })
     }

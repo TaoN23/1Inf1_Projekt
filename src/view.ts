@@ -26,6 +26,14 @@ export class View {
         this.spriteSize = this.controller.calculateSpriteSize();
         this.canvas.style.width = (this.model.getLevelMeta().width * this.spriteSize).toString() + 'px';
         this.canvas.style.height = (this.model.getLevelMeta().height * this.spriteSize).toString + 'px';
+
+        const ctx = this.canvas.getContext('2d');
+        console.log(ctx);
+        
+        ctx!.fillStyle = 'rgb(200, 0, 0)';
+        
+        
+        
     }
     
     setupStartScreen(): void{

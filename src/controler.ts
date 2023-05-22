@@ -5,7 +5,10 @@ import {Sprite} from './model';
 import { SpriteTypes } from './Sprites';
 
 const firstLevel: Level = {
-    meta: {},
+    meta: {
+        width: 20,
+        height: 5,
+    },
     levelString: [
         'wwwwwwwwwwwwwwwwwwww',
         'w#######[#w]########ww',
@@ -19,87 +22,62 @@ export class Controller{
     levels: Array<Level> = [];
     model: Model;
     view: View; 
+    currentLevel: Level;
 
     constructor() {
         this.levels.push(firstLevel);
         this.model = new Model(this.levels[0]);
         this.view = new View(this.model);
-
-        console.log(this.get_right(3,3))
+        this.currentLevel = this.levels[0];
+        console.log(this.getUp(3,3))
 
     };
 
 
-    public move_right(x: number , y: number , z: number){
-    
-        this.model.move_right(x,y,z)
-    
-    }
 
-    public move_left(x: number , y: number , z: number){
-    
-        this.model.move_left(x,y,z)
-    
-    }
-    
-    public move_up(x: number , y: number, z: number){
-    
-       this.model.move_up(x,y,z)
-    
+
+    public getRight(x: number, y: number, z?: number): Sprite | boolean{
+       const newX = x+1;
+       const newY = y;
+
+       if (x === this.currentLevel.meta.width) {
+            return false;
+       }
+
+       return this.model.getSprite(newX, newY);
     }
     
-    public move_down(x: number , y: number , z: number){
-    
-        this.model.move_down(x,y,z)
-    
+    public getLeft(x: number, y: number, z?: number): Sprite | boolean{
+       const newX = x-1;
+       const newY = y;
+
+       if (x  < 0) {
+            return false;
+       }
+
+       return this.model.getSprite(newX, newY);
     }
 
+    public getDown(x: number, y: number, z?: number): Sprite | boolean{
+       const newX = x;
+       const newY = y + 1;
 
+       if (y === this.currentLevel.meta.height) {
+            return false;
+       }
 
-    public get_right(x: number, y: number, z?: number){
-
-        if (z) {
-            return this.model.get_right(x, y, z) 
-        }
-                
-        return this.model.get_right(x, y)
-
+       return this.model.getSprite(newX, newY);
     }
 
-    public get_left(x: number, y: number, z?: number){
+    public getUp(x: number, y: number, z?: number): Sprite | boolean{
+       const newX = x;
+       const newY = y - 1;
 
-        if (z) {
-            return this.model.get_left(x, y, z) 
-        }
-                
-        return this.model.get_left(x, y)
-    }
+       if (y < 0) {
+            return false;
+       }
 
-    public get_up(x: number, y: number, z?: number){
-
-        if (z) {
-           return this.model.get_up(x, y, z) 
-        }
-        
-       return this.model.get_up(x, y)
-
-    }
-
-    public get_down(x: number, y: number, z?: number){
-
-        if (z) {
-           return this.model.get_down(x, y, z) 
-        }
-        
-       return this.model.get_down(x, y)
-
-    }
-
-
-    public sprite_right(spritetype: SpriteTypes){
-
-        this.model.sprite_right(spritetype)
-
+       return this.model.getSprite(newX, newY);
     }
 
 

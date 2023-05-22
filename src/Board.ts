@@ -4,7 +4,10 @@ import { SpriteTypes } from "./Sprites";
 
 export interface Level {
     levelString: Array<string>;
-    meta: Object;
+    meta: {
+        width: number,
+        height: number,
+    };
 }
 
 
@@ -141,15 +144,10 @@ export class Board {
     // }
 
 
-    public getter(x: number , y: number , z?: number){
+    public getSprite(x: number , y: number , z?: number): Sprite{
 
-        if(z){
-
-            return this.board[y][x][z]
-
-        }
         
-        return this.board[y][x]
+        return this.board[y][x][0];
 
     }
 

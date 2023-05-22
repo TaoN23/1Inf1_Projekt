@@ -1,4 +1,6 @@
 import { Controller } from "./controler"
+import './style.css'
+
 
 const rb = [
   '####b####',
@@ -7,10 +9,6 @@ const rb = [
   '####[#www]##[w##w]#',
 ]
 
-
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  hello world
-`
 '#####P######'
 
 new Controller();

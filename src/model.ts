@@ -1,6 +1,6 @@
 import { Board, Level } from "./Board";
 import { SpriteTypes } from "./Sprites";
-import { View } from "./view";
+import { View, ViewState } from "./view";
 
 
 interface ViewOBJ{};
@@ -20,9 +20,6 @@ export interface Sprite {
     type: SpriteTypes;
     // Referenz auf das View Objekt
     reference?: ViewOBJ;
-
-
-
     // getType: function () {
     //     return this.type
     // }
@@ -38,27 +35,28 @@ export interface Sprite {
 
     // }
 
+    z?: number;
 }
 
 
 export class Model {
 
-    views: Array<View> = [];
-    sprites: Array<Sprite> = [];
-    boardModel: Board;
-
-    constructor(private level: Level){
-        this.boardModel = new Board(this.level.levelString);
-        console.log(this.boardModel);
-        
-    }
+    private views: Array<View> = [];
+    private sprites: Array<Sprite> = [];
+    private boardModel: Board | undefined;
+    private level: Level | undefined;
+    private currentPlayer = SpriteTypes.BABA;
+    constructor(private viewState: ViewState){}
 
     public addView(view: View){
         this.views.push(view);
     }
 
     public addSprite(sprite: Sprite, x: number, y: number){
-        this.boardModel.addSprite(sprite, x, y);
+        if (this.boardModel) {
+            this.boardModel.addSprite(sprite, x, y);
+
+        }
     }
 
 
@@ -129,4 +127,40 @@ export class Model {
         return this.boardModel.getSprite(x,y);
     }
 
+    public changeViewState(newState: ViewState): void{
+        if (this.viewState === newState) {
+            return;
+        }
+
+        this.viewState = newState;
+        
+        this.views.forEach((view: View) => {
+            view.stateChange();
+        })
+    }
+
+    public loadLevel(level: Level, spriteSize: number){
+        this.boardModel = new Board(level.levelString, spriteSize);
+        this.level = level; 
+    }
+
+    public getViewState(): ViewState{
+        return this.viewState;
+    }
+
+    public getLevelMeta(){
+        if (this.level) {
+            return this.level.meta;
+        }
+        throw new Error("");
+        
+    }
+
+    public getBoard() {
+        return this.boardModel?.boardCopy;
+    }
+
+    public getPlayer(){
+        return this.boardModel?.getPlayer(this.currentPlayer);
+    }
 }

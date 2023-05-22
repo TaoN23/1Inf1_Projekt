@@ -6,6 +6,10 @@ import { View, ViewState } from "./view";
 interface ViewOBJ{};
 
 export interface Sprite {
+   
+   
+   
+
     // relative Koordinaten im view-model
     x: number;
     y: number;
@@ -16,6 +20,21 @@ export interface Sprite {
     type: SpriteTypes;
     // Referenz auf das View Objekt
     reference?: ViewOBJ;
+    // getType: function () {
+    //     return this.type
+    // }
+
+
+    // public get_x(){
+
+    //     if(type == spritetype){
+
+    //         return x
+
+    //     }
+
+    // }
+
     z?: number;
 }
 
@@ -39,7 +58,74 @@ export class Model {
 
         }
     }
-    
+
+
+
+
+/*
+    public get_right(x: number, y: number, z?: number){
+
+        if(z){
+
+           return this.boardModel.getter(x++, y, z)
+
+        }
+
+       return this.boardModel.getter(x++,y)
+
+    }
+
+    public get_left(x: number, y: number, z?: number){
+
+        if(z){
+
+           return this.boardModel.getter(x--, y, z)
+
+        }
+
+       return this.boardModel.getter(x--,y)
+
+    }
+
+    public get_up(x: number, y: number, z?: number){
+
+        if(z){
+
+           return this.boardModel.getter(x, y--, z)
+
+        }
+
+       return this.boardModel.getter(x,y--)
+
+    }
+
+    public get_down(x: number, y: number, z?: number){
+
+        if(z){
+
+           return this.boardModel.getter(x, y++, z)
+
+        }
+
+       return this.boardModel.getter(x,y++)
+
+    }
+
+
+    public sprite_right(spritetype: SpriteTypes){
+
+        if(spritetype==this.sprites.)
+        
+        
+        
+        
+        this.boardModel.getter(sprite.get_x(spritetype))
+
+    }
+*/
+    public getSprite(x: number, y: number): Sprite{
+        return this.boardModel.getSprite(x,y);
+    }
 
     public changeViewState(newState: ViewState): void{
         if (this.viewState === newState) {

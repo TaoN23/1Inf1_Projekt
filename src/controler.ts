@@ -1,5 +1,7 @@
 import { Level } from './Board';
 import { Model } from './model'
+import {Sprite} from './model';
+import { SpriteTypes } from './Sprites';
 import { Keys, View, ViewState } from './view';
 
 const firstLevel: Level = {
@@ -17,7 +19,7 @@ const firstLevel: Level = {
 }
 
 export class Controller{
-
+  
     private levels: Array<Level> = [];
     private model: Model;
     private view: View;
@@ -62,6 +64,50 @@ export class Controller{
             default:
                 break;
         }
+    }
+
+    public getRight(x: number, y: number, z?: number): Sprite | boolean{
+       const newX = x+1;
+       const newY = y;
+
+       if (x === this.currentLevel.meta.width) {
+            return false;
+       }
+
+       return this.model.getSprite(newX, newY);
+    }
+    
+    public getLeft(x: number, y: number, z?: number): Sprite | boolean{
+       const newX = x-1;
+       const newY = y;
+
+       if (x  < 0) {
+            return false;
+       }
+
+       return this.model.getSprite(newX, newY);
+    }
+
+    public getDown(x: number, y: number, z?: number): Sprite | boolean{
+       const newX = x;
+       const newY = y + 1;
+
+       if (y === this.currentLevel.meta.height) {
+            return false;
+       }
+
+       return this.model.getSprite(newX, newY);
+    }
+
+    public getUp(x: number, y: number, z?: number): Sprite | boolean{
+       const newX = x;
+       const newY = y - 1;
+
+       if (y < 0) {
+            return false;
+       }
+
+       return this.model.getSprite(newX, newY);
     }
 
 }

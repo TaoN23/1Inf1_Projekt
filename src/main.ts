@@ -2,6 +2,7 @@ import { Controller } from "./controler"
 import './style.css'
 
 
+
 const rb = [
   '####b####',
   'www###ww#',
@@ -12,3 +13,6 @@ const rb = [
 '#####P######'
 
 new Controller();
+
+
+

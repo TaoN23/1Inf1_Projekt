@@ -117,6 +117,76 @@ export class Board {
     //     }
     // }
  
+
+   
+    // public get_right(x: number, y: number, z?: number){
+
+    //     if(z){
+
+    //         return this.board[y][x++][z]
+
+    //     }
+
+    //     return this.board[y][x++]
+
+    // }
+
+
+    // public get_left(x: number, y: number, z?: number){
+
+    //     if(this.board[y][x--]!= undefined){
+
+    //         return null;
+    //     } 
+        
+        
+    //     return this.board[y][x--]
+    
+    // }
+    
+    // public get_up(x: number, y: number, z?: number){
+
+
+    //     if(this.board[y--][x]!= undefined){
+
+    //         return null;
+    //     } 
+        
+        
+    //     return this.board[y--][x]
+    
+    // }
+    
+    // public get_down(x: number, y: number, z?: number){
+
+
+    //     if(this.board[y++][x]!= undefined){
+
+    //         return null;
+    //     } 
+        
+        
+    //     return this.board[y++][x]
+    
+    // }
+
+
+    public getSprite(x: number , y: number , z?: number): Sprite{
+
+        
+        return this.board[y][x][0];
+
+    }
+
+
+    public setter(a: Sprite, b: Sprite){
+        
+        a=b
+
+    }
+
+
+
 }
 
 const shortcutMap = {

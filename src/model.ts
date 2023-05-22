@@ -16,27 +16,28 @@ export interface Sprite {
     type: SpriteTypes;
     // Referenz auf das View Objekt
     reference?: ViewOBJ;
+    z?: number;
 }
 
 
 export class Model {
 
-    views: Array<View> = [];
-    sprites: Array<Sprite> = [];
-    boardModel: Board;
-
-    constructor(private level: Level, private viewState: ViewState){
-        this.boardModel = new Board(this.level.levelString);
-        console.log(this.boardModel);
-        
-    }
+    private views: Array<View> = [];
+    private sprites: Array<Sprite> = [];
+    private boardModel: Board | undefined;
+    private level: Level | undefined;
+    private currentPlayer = SpriteTypes.BABA;
+    constructor(private viewState: ViewState){}
 
     public addView(view: View){
         this.views.push(view);
     }
 
     public addSprite(sprite: Sprite, x: number, y: number){
-        this.boardModel.addSprite(sprite, x, y);
+        if (this.boardModel) {
+            this.boardModel.addSprite(sprite, x, y);
+
+        }
     }
     
 
@@ -52,13 +53,28 @@ export class Model {
         })
     }
 
+    public loadLevel(level: Level, spriteSize: number){
+        this.boardModel = new Board(level.levelString, spriteSize);
+        this.level = level; 
+    }
+
     public getViewState(): ViewState{
         return this.viewState;
     }
 
     public getLevelMeta(){
-        return this.level.meta;
+        if (this.level) {
+            return this.level.meta;
+        }
+        throw new Error("");
+        
     }
 
+    public getBoard() {
+        return this.boardModel?.boardCopy;
+    }
 
+    public getPlayer(){
+        return this.boardModel?.getPlayer(this.currentPlayer);
+    }
 }

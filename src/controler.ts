@@ -1,6 +1,6 @@
 import { Level } from './Board';
 import { Model } from './model'
-import { View, ViewState } from './view';
+import { Keys, View, ViewState } from './view';
 
 const firstLevel: Level = {
     meta: {
@@ -18,40 +18,50 @@ const firstLevel: Level = {
 
 export class Controller{
 
-    levels: Array<Level> = [];
-    model: Model;
-    view: View;
+    private levels: Array<Level> = [];
+    private model: Model;
+    private view: View;
+    private currentLevel : Level
 
     constructor() {
         this.levels.push(firstLevel);
-        this.model = new Model(this.levels[0], ViewState.START_SCREEN);
+        this.model = new Model(ViewState.START_SCREEN);
         this.view = new View(this.model, this);
         this.model.addView(this.view);
+        this.currentLevel = this.levels[0];
     };
 
     public startGame(): void{
         document.getElementById('startGame')?.removeEventListener('click', this.startGame);
-        console.log('sG');
-        console.log(this);
-        
-        console.log(this.model.changeViewState);
         
         this.model.changeViewState(ViewState.GAME_SCREEN);
     }
 
     public calculateSpriteSize(){
-        const spriteSize = window.innerWidth / this.model.getLevelMeta().width;
-        console.log(window.innerHeight);
+        const spriteSize = window.innerWidth / this.currentLevel.meta.width;
         
-        if(window.innerHeight - spriteSize * this.model.getLevelMeta().height < 0){
-            const spriteSize = window.innerHeight / this.model.getLevelMeta().height;
+        if(window.innerHeight - spriteSize * this.currentLevel.meta.height < 0){
+            const spriteSize = window.innerHeight / this.currentLevel.meta.height;
+            this.model.loadLevel(this.levels[0], spriteSize)
+            
             return spriteSize;
         }
-        console.log(spriteSize* this.model.getLevelMeta().width);
-        console.log(spriteSize* this.model.getLevelMeta().height);
-        
+        this.model.loadLevel(this.levels[0], spriteSize)
         
         return spriteSize;
+    }
+
+    public move(key: Keys){
+        console.log(this.model.getPlayer());
+
+        switch (key) {
+            case Keys.KEY_UP:
+                
+                break;
+        
+            default:
+                break;
+        }
     }
 
 }

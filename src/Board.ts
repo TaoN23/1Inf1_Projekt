@@ -17,7 +17,7 @@ export class Board {
 
     private board: ModelBoard = [];
 
-    constructor(rawBoard: Array<string>) {
+    constructor(rawBoard: Array<string>, private spriteSize: number) {
         this.parseBoard(rawBoard);
         console.log(this.board);
         
@@ -37,7 +37,7 @@ export class Board {
                     if(leveldata[row].at(column) === '[') {
                         column++;
                         
-                        while(true) {
+                        for(let z = 0; true; z++) {
                             delayCounter++;
                             if (leveldata[row].at(column)==']') {
                                 
@@ -46,7 +46,7 @@ export class Board {
                             }
                             console.log(leveldata[row].at(column));
                             // @ts-expect-error
-                            this.addSpriteData(column - delayCounter, row, 20, 20, shortcutMap[leveldata[row].at(column)]);
+                            this.addSpriteData(column - delayCounter, row, this.spriteSize, this.spriteSize, shortcutMap[leveldata[row].at(column)]);
                          
                             column++;
 
@@ -54,17 +54,20 @@ export class Board {
 
                     }
                     //@ts-expect-error
-                    this.addSpriteData(column - delayCounter, row, 20, 20, shortcutMap[leveldata[row].at(column)]);
+                    this.addSpriteData(column - delayCounter, row, this.spriteSize, this.spriteSize, shortcutMap[leveldata[row].at(column)]);
                 }
 
             }
     }
 
-    private addSpriteData(x: number, y: number, width: number, height: number, type: SpriteTypes){
+    private addSpriteData(x: number, y: number, width: number, height: number, type: SpriteTypes, z?: number,){
         if (!this.board[y])
             this.board[y] = [];
         if (!this.board[y][x])
             this.board[y][x] = [];
+        if (z) {
+            this.board[y][x].push({x, y, width_p: width, height_p: height, type, z});    
+        }
         this.board[y][x].push({x, y, width_p: width, height_p: height, type});
     }
 
@@ -79,6 +82,30 @@ export class Board {
         console.log(JSON.stringify(this.board[2]));
 
     }
+
+    
+    public get boardCopy() : ModelBoard {
+        return [...this.board]
+    }
+
+
+    public getPlayer(currentPlayer: SpriteTypes) : Array<Sprite> {
+        const player: Array<Sprite> = [];
+
+        this.board.forEach((row) => {
+            row.forEach((column) => {
+                column.forEach((sprite: Sprite) => {
+                    if (sprite.type === currentPlayer) {
+                        player.push(sprite);
+                    }
+                })
+            })
+        })
+
+        return player;
+    }
+    
+    
 
     // public getSprite( shortcut: String , x: number , y: number , z: number){
     //     switch (shortcut) {

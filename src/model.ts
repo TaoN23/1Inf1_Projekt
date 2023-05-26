@@ -46,6 +46,8 @@ export class Model {
     private boardModel: Board | undefined;
     private level: Level | undefined;
     private currentPlayer = SpriteTypes.BABA;
+    currentStop = SpriteTypes.WALL;
+    private moveList: Array<Sprite> = []
     constructor(private viewState: ViewState){}
 
     public addView(view: View){
@@ -123,8 +125,10 @@ export class Model {
 
     }
 */
-    public getSprite(x: number, y: number): Sprite{
-        return this.boardModel.getSprite(x,y);
+    public getSprite(x: number, y: number): Sprite | undefined{
+        console.log('gs');
+        
+        return this.boardModel!.getSprite(x,y);
     }
 
     public changeViewState(newState: ViewState): void{
@@ -153,6 +157,15 @@ export class Model {
             return this.level.meta;
         }
         throw new Error("");
+        
+    }
+
+    public prepareMove(sprite: Sprite, newX: number, newY: number): void{
+        this.moveList.push(sprite);
+
+        this.boardModel?.setSprite({...sprite}, newX, newY)
+        this.boardModel?.deleteSprite(sprite.x, sprite.y);
+        console.log(this.moveList);
         
     }
 

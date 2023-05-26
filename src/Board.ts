@@ -79,7 +79,8 @@ export class Board {
     }
 
     public log(){
-        console.log(JSON.stringify(this.board[2]));
+        console.log(JSON.stringify(this.board[1]));
+        console.log(JSON.stringify(this.board[0]));
 
     }
 
@@ -171,18 +172,24 @@ export class Board {
     // }
 
 
-    public getSprite(x: number , y: number , z?: number): Sprite{
-
+    public getSprite(x: number , y: number): Sprite | undefined{
         
-        return this.board[y][x][0];
-
+        return this.board[y][x].findLast((i) => i,);
     }
 
 
-    public setter(a: Sprite, b: Sprite){
+    public setSprite(sprite: Sprite, x:number, y: number){
         
-        a=b
+        this.board[y][x].push(sprite);
 
+    }
+
+    /**
+     * deleteSprite
+     */
+    public deleteSprite(x: number, y: number) {
+        this.board[y][x].pop();
+        this.log();
     }
 
 

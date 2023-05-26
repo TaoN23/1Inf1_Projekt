@@ -11,7 +11,7 @@ const firstLevel: Level = {
     },
     levelString: [
         'wwwwwwwwww',
-        'w########w',
+        'w###w####w',
         'w##w[#b]w###w',
         'w########w',
         'wwwwwwwwww',
@@ -54,11 +54,27 @@ export class Controller{
     }
 
     public move(key: Keys){
-        console.log(this.model.getPlayer());
+        const currentPlayer = this.model.getPlayer();
 
         switch (key) {
             case Keys.KEY_UP:
-                
+                currentPlayer?.forEach((sprite) => {
+                    console.log(sprite);
+                    
+                  const up = this.getUp(sprite.x, sprite.y);  
+                  console.log(up);
+                  if (up === undefined) {
+                    console.log(up);
+                    
+                    return;
+                  }
+
+                  if (up.type != this.model.currentStop) {
+                      this.model.prepareMove(sprite, up.x, up.y);
+                  }
+
+                })  
+
                 break;
         
             default:
@@ -66,6 +82,7 @@ export class Controller{
         }
     }
 
+    /*
     public getRight(x: number, y: number, z?: number): Sprite | boolean{
        const newX = x+1;
        const newY = y;
@@ -98,13 +115,14 @@ export class Controller{
 
        return this.model.getSprite(newX, newY);
     }
-
-    public getUp(x: number, y: number, z?: number): Sprite | boolean{
+*/
+    public getUp(x: number, y: number, z?: number): Sprite | undefined{
        const newX = x;
        const newY = y - 1;
-
-       if (y < 0) {
-            return false;
+        console.log(newY);
+        
+       if (newY < 0) {
+            return undefined;
        }
 
        return this.model.getSprite(newX, newY);

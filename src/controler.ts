@@ -76,46 +76,110 @@ export class Controller{
                 })  
 
                 break;
+
         
-            default:
+            case Keys.KEY_DOWN:
+
+            currentPlayer?.forEach((sprite) => {
+                console.log(sprite);
+                
+              const down = this.getDown(sprite.x, sprite.y);  
+              console.log(down);
+              if (down === undefined) {
+                console.log(down);
+                
+                return;
+              }
+
+              if (down.type != this.model.currentStop) {
+                  this.model.prepareMove(sprite, down.x, down.y);
+              }
+
+            })  
+
                 break;
+
+
+            case Keys.KEY_LEFT:
+
+            currentPlayer?.forEach((sprite) => {
+                console.log(sprite);
+                
+              const left = this.getLeft(sprite.x, sprite.y);  
+              console.log(left);
+              if (left === undefined) {
+                console.log(left);
+                
+                return;
+              }
+
+              if (left.type != this.model.currentStop) {
+                  this.model.prepareMove(sprite, left.x, left.y);
+              }
+
+            })  
+
+                break;
+
+
+            case Keys.KEY_RIGHT:
+
+                currentPlayer?.forEach((sprite) => {
+                    console.log(sprite);
+                    
+                  const right = this.getRight(sprite.x, sprite.y);  
+                  console.log(right);
+                  if (right === undefined) {
+                    console.log(right);
+                    
+                    return;
+                  }
+    
+                  if (right.type != this.model.currentStop) {
+                      this.model.prepareMove(sprite, right.x, right.y);
+                  }
+    
+                })  
+    
+                    break;
+
         }
     }
 
-    /*
-    public getRight(x: number, y: number, z?: number): Sprite | boolean{
+    
+    public getRight(x: number, y: number, z?: number): Sprite | undefined{
        const newX = x+1;
        const newY = y;
 
        if (x === this.currentLevel.meta.width) {
-            return false;
+            return undefined;
        }
 
        return this.model.getSprite(newX, newY);
     }
     
-    public getLeft(x: number, y: number, z?: number): Sprite | boolean{
+    public getLeft(x: number, y: number, z?: number): Sprite | undefined{
        const newX = x-1;
        const newY = y;
 
        if (x  < 0) {
-            return false;
+            return undefined;
        }
 
        return this.model.getSprite(newX, newY);
     }
 
-    public getDown(x: number, y: number, z?: number): Sprite | boolean{
+    public getDown(x: number, y: number, z?: number): Sprite | undefined{
        const newX = x;
        const newY = y + 1;
 
        if (y === this.currentLevel.meta.height) {
-            return false;
+            return undefined;
        }
 
        return this.model.getSprite(newX, newY);
     }
-*/
+
     public getUp(x: number, y: number, z?: number): Sprite | undefined{
        const newX = x;
        const newY = y - 1;

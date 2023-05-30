@@ -1,7 +1,6 @@
 import { Level } from './Board';
 import { Model } from './model'
 import {Sprite} from './model';
-import { SpriteTypes } from './Sprites';
 import { Keys, View, ViewState } from './view';
 
 const firstLevel: Level = {
@@ -12,7 +11,7 @@ const firstLevel: Level = {
     levelString: [
         'wwwwwwwwww',
         'w###w####w',
-        'w##w[#b]w###w',
+        'w##w[#b][#b]###w',
         'w########w',
         'wwwwwwwwww',
     ]
@@ -144,6 +143,8 @@ export class Controller{
                     break;
 
         }
+
+        this.model.move();
     }
 
     
@@ -174,12 +175,13 @@ export class Controller{
        const newY = y + 1;
 
        if (y === this.currentLevel.meta.height) {
+            console.log("y");
+            
             return undefined;
        }
 
        return this.model.getSprite(newX, newY);
     }
-
     public getUp(x: number, y: number, z?: number): Sprite | undefined{
        const newX = x;
        const newY = y - 1;

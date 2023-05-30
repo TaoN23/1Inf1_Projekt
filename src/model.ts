@@ -61,70 +61,6 @@ export class Model {
         }
     }
 
-
-
-
-/*
-    public get_right(x: number, y: number, z?: number){
-
-        if(z){
-
-           return this.boardModel.getter(x++, y, z)
-
-        }
-
-       return this.boardModel.getter(x++,y)
-
-    }
-
-    public get_left(x: number, y: number, z?: number){
-
-        if(z){
-
-           return this.boardModel.getter(x--, y, z)
-
-        }
-
-       return this.boardModel.getter(x--,y)
-
-    }
-
-    public get_up(x: number, y: number, z?: number){
-
-        if(z){
-
-           return this.boardModel.getter(x, y--, z)
-
-        }
-
-       return this.boardModel.getter(x,y--)
-
-    }
-
-    public get_down(x: number, y: number, z?: number){
-
-        if(z){
-
-           return this.boardModel.getter(x, y++, z)
-
-        }
-
-       return this.boardModel.getter(x,y++)
-
-    }
-
-
-    public sprite_right(spritetype: SpriteTypes){
-
-        if(spritetype==this.sprites.)
-        
-        
-        
-        
-        this.boardModel.getter(sprite.get_x(spritetype))
-
-    }
-*/
     public getSprite(x: number, y: number): Sprite | undefined{
         console.log('gs');
         
@@ -163,9 +99,19 @@ export class Model {
     public prepareMove(sprite: Sprite, newX: number, newY: number): void{
         this.moveList.push(sprite);
 
-        this.boardModel?.setSprite({...sprite}, newX, newY)
+        this.boardModel?.setSprite({...sprite, x: newX, y: newY}, newX, newY)
         this.boardModel?.deleteSprite(sprite.x, sprite.y);
         console.log(this.moveList);
+        
+    }
+
+    /**
+     * move
+     */
+    public move() {
+        console.log('moove');
+        this.boardModel?.log();
+        this.moveList = [];
         
     }
 

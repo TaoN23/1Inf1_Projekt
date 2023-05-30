@@ -79,8 +79,17 @@ export class Board {
     }
 
     public log(){
-        console.log(JSON.stringify(this.board[1]));
-        console.log(JSON.stringify(this.board[0]));
+        let foo = '';
+        this.board.forEach((row) => {
+            row.forEach((column) => {
+                   foo += structuredClone(column).pop().type.toString();
+            })
+            foo += '\n';
+            
+        })
+
+        console.log(foo);
+        
 
     }
 
@@ -107,69 +116,6 @@ export class Board {
     }
     
     
-
-    // public getSprite( shortcut: String , x: number , y: number , z: number){
-    //     switch (shortcut) {
-            
-    //         case '#': return null;
-    //         case 'b': return this.board[y][x][length] = {x: 0, y: 0, width_p: 20, height_p: 20, type: SpriteTypes.BABA}
-    //         case 'w': return this.board[y][x][length] = {x: 0, y: 0, width_p: 20, height_p: 20, type: SpriteTypes.WALL}
-
-    //     }
-    // }
- 
-
-   
-    // public get_right(x: number, y: number, z?: number){
-
-    //     if(z){
-
-    //         return this.board[y][x++][z]
-
-    //     }
-
-    //     return this.board[y][x++]
-
-    // }
-
-
-    // public get_left(x: number, y: number, z?: number){
-
-    //     if(this.board[y][x--]!= undefined){
-
-    //         return null;
-    //     } 
-        
-        
-    //     return this.board[y][x--]
-    
-    // }
-    
-    // public get_up(x: number, y: number, z?: number){
-
-
-    //     if(this.board[y--][x]!= undefined){
-
-    //         return null;
-    //     } 
-        
-        
-    //     return this.board[y--][x]
-    
-    // }
-    
-    // public get_down(x: number, y: number, z?: number){
-
-
-    //     if(this.board[y++][x]!= undefined){
-
-    //         return null;
-    //     } 
-        
-        
-    //     return this.board[y++][x]
-    
-    // }
 
 
     public getSprite(x: number , y: number): Sprite | undefined{

@@ -1,4 +1,5 @@
 import { Level } from './Board';
+import { SpriteTextObjectTypes, SpriteTypes, SpriteTextVerbObjectTypes, SpriteTextToSprite } from './Sprites';
 import { Model } from './model'
 import {Sprite} from './model';
 import { Keys, View, ViewState } from './view';
@@ -10,7 +11,7 @@ const firstLevel: Level = {
     },
     levelString: [
         'wwwwwwwwww',
-        'w###w####w',
+        'w[#k][#i][#y]##w####w',
         'w##w[#b][#b]###w',
         'w########w',
         'wwwwwwwwww',
@@ -53,6 +54,7 @@ export class Controller{
     }
 
     public move(key: Keys){
+        this.updateLogic();
         const currentPlayer = this.model.getPlayer();
 
         switch (key) {
@@ -68,7 +70,7 @@ export class Controller{
                     return;
                   }
 
-                  if (up.type != this.model.currentStop) {
+                  if (up.type != this.model.getCurrentStop()) {
                       this.model.prepareMove(sprite, up.x, up.y);
                   }
 
@@ -90,7 +92,7 @@ export class Controller{
                 return;
               }
 
-              if (down.type != this.model.currentStop) {
+              if (down.type != this.model.getCurrentStop()) {
                   this.model.prepareMove(sprite, down.x, down.y);
               }
 
@@ -112,7 +114,7 @@ export class Controller{
                 return;
               }
 
-              if (left.type != this.model.currentStop) {
+              if (left.type != this.model.getCurrentStop()) {
                   this.model.prepareMove(sprite, left.x, left.y);
               }
 
@@ -134,7 +136,7 @@ export class Controller{
                     return;
                   }
     
-                  if (right.type != this.model.currentStop) {
+                  if (right.type != this.model.getCurrentStop()) {
                       this.model.prepareMove(sprite, right.x, right.y);
                   }
     
@@ -145,6 +147,80 @@ export class Controller{
         }
 
         this.model.move();
+    }
+
+    private updateLogic(){
+        const is = this.model.getIs();
+
+        is?.forEach((is: Sprite) => {
+            console.log(is);
+            
+
+            const left: Sprite | undefined = this.getLeft(is.x, is.y);
+            
+            if (left) {
+                console.log('is');
+                
+            if (Object.values(SpriteTextObjectTypes).includes(left.type) ) {
+                    const right : Sprite | undefined = this.getRight(is.x, is.y);
+
+                    if (right) {
+                        
+                        if (Object.values(SpriteTextVerbObjectTypes).includes(right.type)) {
+                            const foo: any = {
+                                'T_You' : (newPlayer: SpriteTypes) => {
+                                    this.model.setCurrentPlayer(newPlayer);
+                                }
+                            };
+
+                            foo[right.type.toString()](SpriteTextToSprite[left.type.toString()]);
+                        }
+                        
+                    }
+                }
+            }
+                
+
+            const up: Sprite | undefined = this.getLeft(is.x, is.y)
+
+            if (up){
+                
+                if (Object.values(SpriteTextObjectTypes).includes(up.type) ){
+                    
+                    const down : Sprite | undefined = this.getDown(is.x, is.y)
+
+                    if(down) {
+                        
+                        if(Object.values(SpriteTextVerbObjectTypes).includes(down.type)){
+                            const foo: any = {
+                                'T_You' : (newPlayer: SpriteTypes) => {console.log(newPlayer);
+                                }
+                            };
+                        
+                            foo[down.type.toString()](SpriteTextToSprite[up.type.toString()])
+
+
+                            
+                            
+
+                        }
+                        
+                    }
+                    
+                
+                }
+
+
+                
+            }
+
+
+
+            
+
+
+            
+        })
     }
 
     

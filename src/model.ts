@@ -46,8 +46,9 @@ export class Model {
     private boardModel: Board | undefined;
     private level: Level | undefined;
     private currentPlayer = SpriteTypes.BABA;
-    currentStop = SpriteTypes.WALL;
+    private currentStop = SpriteTypes.WALL;
     private moveList: Array<Sprite> = []
+
     constructor(private viewState: ViewState){}
 
     public addView(view: View){
@@ -105,6 +106,10 @@ export class Model {
         
     }
 
+    public getCurrentStop(): SpriteTypes {
+        return this.currentStop;
+    }
+
     /**
      * move
      */
@@ -121,5 +126,17 @@ export class Model {
 
     public getPlayer(){
         return this.boardModel?.getPlayer(this.currentPlayer);
+    }
+
+    public setCurrentPlayer(newPlayer: SpriteTypes){
+        this.currentPlayer = newPlayer;
+        console.log('currentP:');
+        
+        console.log(this.currentPlayer);
+        
+    }
+
+    public getIs(){
+        return this.boardModel?.getIs();
     }
 }

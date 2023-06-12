@@ -19,7 +19,7 @@ export class Board {
 
     constructor(rawBoard: Array<string>, private spriteSize: number) {
         this.parseBoard(rawBoard);
-        console.log(this.board);
+        this.log();
         
     }
 
@@ -115,6 +115,25 @@ export class Board {
         return player;
     }
     
+
+    public getIs(): Array<Sprite>{
+
+        const is: Array<Sprite> = [];
+
+        this.board.forEach((row) => {
+            row.forEach((column) => {
+                column.forEach((sprite: Sprite) => {
+                    if (sprite.type === SpriteTypes.IS) {
+                        is.push(sprite);
+                    }
+                })
+            })
+        })
+
+        return is;
+
+        
+    }
     
 
 
@@ -146,4 +165,13 @@ const shortcutMap = {
     '#': SpriteTypes.VOID,
     'b': SpriteTypes.BABA,
     'w': SpriteTypes.WALL,
+    'f': SpriteTypes.FLAG,
+    'i': SpriteTypes.IS,
+    'k': SpriteTypes.T_BABA,
+    'm': SpriteTypes.T_WALL,
+    'u': SpriteTypes.T_FLAG,
+    's': SpriteTypes.T_STOP,
+    'y': SpriteTypes.T_YOU,
+    'p': SpriteTypes.T_WIN,
+
 }

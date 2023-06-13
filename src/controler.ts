@@ -170,7 +170,15 @@ export class Controller{
                             const foo: any = {
                                 'T_You' : (newPlayer: SpriteTypes) => {
                                     this.model.setCurrentPlayer(newPlayer);
-                                }
+                                },
+
+                                'T_Stop' : (newStop: SpriteTypes) => {
+                                    this.model.setCurrentStop(newStop);
+                                },
+
+                                'T_Win' : (newWin: SpriteTypes) => {
+                                    this.model.setCurrentWin(newWin);
+                                },
                             };
 
                             foo[right.type.toString()](SpriteTextToSprite[left.type.toString()]);
@@ -193,15 +201,20 @@ export class Controller{
                         
                         if(Object.values(SpriteTextVerbObjectTypes).includes(down.type)){
                             const foo: any = {
-                                'T_You' : (newPlayer: SpriteTypes) => {console.log(newPlayer);
-                                }
+                                'T_You' : (newPlayer: SpriteTypes) => {
+                                    this.model.setCurrentPlayer(newPlayer);
+                                },
+
+                                'T_Stop' : (newStop: SpriteTypes) => {
+                                    this.model.setCurrentStop(newStop);
+                                },
+
+                                'T_Win' : (newWin: SpriteTypes) => {
+                                    this.model.setCurrentWin(newWin);
+                                },
                             };
                         
                             foo[down.type.toString()](SpriteTextToSprite[up.type.toString()])
-
-
-                            
-                            
 
                         }
                         
@@ -213,11 +226,6 @@ export class Controller{
 
                 
             }
-
-
-
-            
-
 
             
         })

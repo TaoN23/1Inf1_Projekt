@@ -47,6 +47,7 @@ export class Model {
     private level: Level | undefined;
     private currentPlayer = SpriteTypes.BABA;
     private currentStop = SpriteTypes.WALL;
+    private currentWin = SpriteTypes.FLAG;
     private moveList: Array<Sprite> = []
 
     constructor(private viewState: ViewState){}
@@ -134,6 +135,22 @@ export class Model {
         
         console.log(this.currentPlayer);
         
+    }
+
+    public setCurrentStop(newStop: SpriteTypes){
+        this.currentStop = newStop;
+        console.log('currentS:');
+
+        console.log(this.currentStop);
+
+    }
+
+    public setCurrentWin(newWin: SpriteTypes){
+        this.currentWin = newWin;
+        console.log('currentW:')
+
+        console.log(this.currentWin);
+
     }
 
     public getIs(){

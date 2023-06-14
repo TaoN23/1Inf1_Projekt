@@ -25,17 +25,17 @@ export class View {
         if (!board) {
             throw new Error("");
         }
-/*
         board.forEach((row) => {
             row.forEach((column) => {
                 column.forEach((sprite) => {
                     console.log(sprite.width_p);
-                    
-                    new ViewOBJ(sprite, this.context, this.model);
+                    if (this.context != null && this.context != undefined) {
+                        new ViewOBJ(sprite, this.context, this.model);
+                    }
                 })
             })
         })
-        */
+        
 
         window.addEventListener('keypress', this.notifyController.bind(this));
     }
@@ -108,12 +108,12 @@ class ViewOBJ {
         const image = new Image();
 
         image.onload = () => {
-            this.context.drawImage(image, this.sprite.width_p * this.sprite.x, this.sprite.height_p * this.sprite.y, this.sprite.width_p, this.sprite.height_p);
+            this.context.drawImage(image, image.width* this.sprite.x, image.width * this.sprite.y, image.width, image.width);
         };
 
         image.src = imageMap.get(this.sprite.type)!;
-        image.width = this.sprite.width_p;
-        image.height = this.sprite.height_p;
+        image.width = this.sprite.width_p / 512 ;
+        image.height = this.sprite.height_p / 512 * 512;
     }
 }
 

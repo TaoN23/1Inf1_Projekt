@@ -37,3 +37,10 @@ export const SpriteTextToSprite: any = {
     'T_Wall' : SpriteTypes.WALL,
     'T_Flag' : SpriteTypes.FLAG,
 }
+
+export const moveAble: any = {
+    'T_Baba' : SpriteTypes.BABA,
+    'T_Wall' : SpriteTypes.WALL,
+    'T_Flag' : SpriteTypes.FLAG,
+    'Is' : SpriteTypes.IS,
+}

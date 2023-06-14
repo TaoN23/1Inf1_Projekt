@@ -53,6 +53,9 @@ export class Controller{
         return spriteSize;
     }
 
+
+    
+
     public move(key: Keys){
         this.updateLogic();
         const currentPlayer = this.model.getPlayer();
@@ -149,6 +152,38 @@ export class Controller{
         this.model.move();
     }
 
+
+
+
+    private setNewRules(sprite1: Sprite | undefined, sprite2: Sprite | undefined) : void {
+        if (sprite1) {    
+            if (Object.values(SpriteTextObjectTypes).includes(sprite1.type) ) {
+
+                    if (sprite2) {
+                        
+                        if (Object.values(SpriteTextVerbObjectTypes).includes(sprite2.type)) {
+                            const foo: any = {
+                                'T_You' : (newPlayer: SpriteTypes) => {
+                                    this.model.setCurrentPlayer(newPlayer);
+                                },
+
+                                'T_Stop' : (newStop: SpriteTypes) => {
+                                    this.model.setCurrentStop(newStop);
+                                },
+
+                                'T_Win' : (newWin: SpriteTypes) => {
+                                    this.model.setCurrentWin(newWin);
+                                },
+                            };
+
+                            foo[sprite2.type.toString()](SpriteTextToSprite[sprite1.type.toString()]);
+                        }
+                        
+                    }
+                }
+        }
+    }
+
     private updateLogic(){
         const is = this.model.getIs();
 
@@ -157,79 +192,23 @@ export class Controller{
             
 
             const left: Sprite | undefined = this.getLeft(is.x, is.y);
+            const right: Sprite | undefined = this.getRight(is.x, is.y);
             
-            if (left) {
-                console.log('is');
-                
-            if (Object.values(SpriteTextObjectTypes).includes(left.type) ) {
-                    const right : Sprite | undefined = this.getRight(is.x, is.y);
-
-                    if (right) {
-                        
-                        if (Object.values(SpriteTextVerbObjectTypes).includes(right.type)) {
-                            const foo: any = {
-                                'T_You' : (newPlayer: SpriteTypes) => {
-                                    this.model.setCurrentPlayer(newPlayer);
-                                },
-
-                                'T_Stop' : (newStop: SpriteTypes) => {
-                                    this.model.setCurrentStop(newStop);
-                                },
-
-                                'T_Win' : (newWin: SpriteTypes) => {
-                                    this.model.setCurrentWin(newWin);
-                                },
-                            };
-
-                            foo[right.type.toString()](SpriteTextToSprite[left.type.toString()]);
-                        }
-                        
-                    }
-                }
-            }
+            this.setNewRules(left, right);
                 
 
             const up: Sprite | undefined = this.getLeft(is.x, is.y)
+            const down: Sprite | undefined = this.getLeft(is.x, is.y)
 
-            if (up){
-                
-                if (Object.values(SpriteTextObjectTypes).includes(up.type) ){
-                    
-                    const down : Sprite | undefined = this.getDown(is.x, is.y)
-
-                    if(down) {
-                        
-                        if(Object.values(SpriteTextVerbObjectTypes).includes(down.type)){
-                            const foo: any = {
-                                'T_You' : (newPlayer: SpriteTypes) => {
-                                    this.model.setCurrentPlayer(newPlayer);
-                                },
-
-                                'T_Stop' : (newStop: SpriteTypes) => {
-                                    this.model.setCurrentStop(newStop);
-                                },
-
-                                'T_Win' : (newWin: SpriteTypes) => {
-                                    this.model.setCurrentWin(newWin);
-                                },
-                            };
-                        
-                            foo[down.type.toString()](SpriteTextToSprite[up.type.toString()])
-
-                        }
-                        
-                    }
-                    
-                
-                }
-
-
-                
-            }
+            this.setNewRules(up, down);
 
             
         })
     }
+
+
+
+
 
     
     public getRight(x: number, y: number, z?: number): Sprite | undefined{

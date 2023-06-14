@@ -1,9 +1,7 @@
 import { Board, Level } from "./Board";
 import { SpriteTypes } from "./Sprites";
-import { View, ViewState } from "./view";
+import { View, ViewOBJ, ViewState } from "./view";
 
-
-interface ViewOBJ{};
 
 export interface Sprite {
    
@@ -39,16 +37,22 @@ export interface Sprite {
 }
 
 
+
+type movelistItem = {
+    sprite: Sprite;
+    newX: number;
+    newY: number;
+}
 export class Model {
 
     private views: Array<View> = [];
-    private sprites: Array<Sprite> = [];
     private boardModel: Board | undefined;
     private level: Level | undefined;
     private currentPlayer = SpriteTypes.BABA;
-    private currentStop = SpriteTypes.WALL;
+    //@ts-expect-error
+    private currentStop: SpriteTypes | null ;
     private currentWin = SpriteTypes.FLAG;
-    private moveList: Array<Sprite> = []
+    private moveList: Array<movelistItem> = []
 
     constructor(private viewState: ViewState){}
 
@@ -56,10 +60,9 @@ export class Model {
         this.views.push(view);
     }
 
-    public addSprite(sprite: Sprite, x: number, y: number){
+    public addSprite(sprite: ViewOBJ, x: number, y: number){
         if (this.boardModel) {
             this.boardModel.addSprite(sprite, x, y);
-
         }
     }
 
@@ -99,7 +102,7 @@ export class Model {
     }
 
     public prepareMove(sprite: Sprite, newX: number, newY: number): void{
-        this.moveList.push(sprite);
+        this.moveList.push({sprite, newX, newY});
 
         this.boardModel?.setSprite({...sprite, x: newX, y: newY}, newX, newY)
         this.boardModel?.deleteSprite(sprite.x, sprite.y);
@@ -107,7 +110,7 @@ export class Model {
         
     }
 
-    public getCurrentStop(): SpriteTypes {
+    public getCurrentStop(): SpriteTypes | null {
         return this.currentStop;
     }
 
@@ -115,8 +118,9 @@ export class Model {
      * move
      */
     public move() {
-        console.log('moove');
-        this.boardModel?.log();
+        this.moveList.forEach((item) => {
+            item.sprite.reference?.move(item.newX, item.newY);
+        })
         this.moveList = [];
         
     }
@@ -144,7 +148,7 @@ export class Model {
         
     }
 
-    public setCurrentStop(newStop: SpriteTypes){
+    public setCurrentStop(newStop: SpriteTypes | null){
         this.currentStop = newStop;
         console.log('currentS:');
 

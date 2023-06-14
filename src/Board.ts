@@ -1,5 +1,6 @@
 import { Sprite } from "./model";
 import { SpriteTypes } from "./Sprites";
+import { ViewOBJ } from "./view";
 
 
 export interface Level {
@@ -73,24 +74,24 @@ export class Board {
 
 
     // View Objekte können sich eintragen
-    public addSprite(sprite: Sprite, x: number, y: number) {
+    public addSprite(sprite: ViewOBJ, x: number, y: number) {
         const length = this.board[y][x].length;
-        this.board[y][x][length].reference = sprite;
+        this.board[y][x][length-1].reference = sprite;
     }
 
     public log(){
         let foo = '';
-        console.log(JSON.stringify(this.board[1]));
-        this.board.forEach((row) => {
-            row.forEach((column) => {
-                if (column){
-                    foo += structuredClone(column).pop().type.toString();
+        // console.log(JSON.stringify(this.board[1]));
+        // this.board.forEach((row) => {
+        //     row.forEach((column) => {
+        //         if (column){
+        //             foo += structuredClone(column).pop().type.toString();
                     
-                }
-            })
-            foo += '\n';
+        //         }
+        //     })
+        //     foo += '\n';
             
-        })
+        // })
         
         console.log(foo);
         

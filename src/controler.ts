@@ -12,9 +12,9 @@ const firstLevel: Level = {
     levelString: [
         'wwwwwwwwwww',
         '#[#k][#i][#y]##w###w',
-        'w##w[#b][#b]####w',
-        'w#########w',
-        'w#########w',
+        'w##w[#b]###[#m]#w',
+        'w#######[#i]#w',
+        'w#######[#s]#w',
         'wwwwwwwwwww',
     ]
 }
@@ -43,12 +43,7 @@ export class Controller{
     public calculateSpriteSize(){
         const spriteSize = window.innerWidth / this.currentLevel.meta.width;
         
-        if(window.innerHeight - spriteSize * this.currentLevel.meta.height < 0){
-            const spriteSize = window.innerHeight / this.currentLevel.meta.height;
-            this.model.loadLevel(this.levels[0], spriteSize)
-            
-            return spriteSize;
-        }
+       
         this.model.loadLevel(this.levels[0], spriteSize)
         
         return spriteSize;
@@ -204,18 +199,22 @@ export class Controller{
 
 
     private setNewRules(sprite1: Sprite | undefined, sprite2: Sprite | undefined) : void {
+        console.log(sprite1, sprite2);
+        
         if (sprite1) {    
-            if (Object.values(SpriteTextObjectTypes).includes(sprite1.type) ) {
+            if (SpriteTextObjectTypes.hasOwnProperty(sprite1.type.toString())) {
 
                     if (sprite2) {
                         
-                        if (Object.values(SpriteTextVerbObjectTypes).includes(sprite2.type)) {
+                        if (SpriteTextVerbObjectTypes.hasOwnProperty(sprite2.type.toString())) {
                             const foo: any = {
                                 'T_You' : (newPlayer: SpriteTypes) => {
                                     this.model.setCurrentPlayer(newPlayer);
                                 },
 
                                 'T_Stop' : (newStop: SpriteTypes) => {
+                                    console.log(newStop);
+                                    
                                     this.model.setCurrentStop(newStop);
                                 },
 
@@ -223,7 +222,8 @@ export class Controller{
                                     this.model.setCurrentWin(newWin);
                                 },
                             };
-
+                            console.log(sprite1, sprite2);
+                            
                             foo[sprite2.type.toString()](SpriteTextToSprite[sprite1.type.toString()]);
                         }
                         
@@ -233,6 +233,8 @@ export class Controller{
     }
 
     private updateLogic(){
+        this.model.setCurrentStop(null);
+
         const is = this.model.getIs();
 
         is?.forEach((is: Sprite) => {
@@ -245,8 +247,8 @@ export class Controller{
             this.setNewRules(left, right);
                 
 
-            const up: Sprite | undefined = this.getLeft(is.x, is.y)
-            const down: Sprite | undefined = this.getLeft(is.x, is.y)
+            const up: Sprite | undefined = this.getUp(is.x, is.y)
+            const down: Sprite | undefined = this.getDown(is.x, is.y)
 
             this.setNewRules(up, down);
 

@@ -45,9 +45,8 @@ export class View {
 
           const view = this;
           
-          // Preload function to load any assets
+
           function preload() {
-            // Load any necessary assets here (e.g., images, sounds)
           }
           
           ;
@@ -58,28 +57,22 @@ export class View {
             view.board!.forEach((row) => {
                 row.forEach((column) => {
                     column.forEach((sprite) => {
-                        // new ViewOBJ(this.scene!, this.spriteSize!, sprite.x, sprite.y)
-                            console.log(this);
-                            
-                            this.add.rectangle(view.spriteSize!* sprite.x, view.spriteSize!*sprite.y, view.spriteSize, view.spriteSize, 0x0000ff);
+                            new ViewOBJ(this, view.spriteSize!, sprite.x, sprite.y, sprite.type, view);
                         })
                     })
                 })
           
             // Add any additional configuration or interactivity here
           }
+
+          function update() {
+            
+          }
         
 
         window.addEventListener('keypress', this.notifyController.bind(this));
     }
 
-    private setUpLevel(){
-
-
-
-       
-    }
-    
     private setupStartScreen(): void{
         this.appRef!.innerHTML = startScreen;
         console.log(this.controller);
@@ -112,9 +105,8 @@ export class View {
         
     }
 
-    public setScene(scene: Phaser.Scene){
-        this.scene = scene;
-        this.setUpLevel();
+    public addSprite(sprite: ViewOBJ, x: number, y: number): void{
+        this.model.addSprite(sprite, x, y);
     }
 }
 
@@ -132,31 +124,37 @@ export enum ViewState {
 const startScreen = '<h1>Startscreen</h1> <button id="startGame">Play</button>'
 
 
-class ViewOBJ {
-    constructor(private scene: Phaser.Scene, private spriteSize: number, x: number, y: number) {
+export class ViewOBJ {
+    sprite: Phaser.GameObjects.Rectangle;
+    constructor(private scene: Phaser.Scene, private spriteSize: number, x: number, y: number, type: SpriteTypes, private view: View) {
         console.log(this.scene);
         
-       this.scene.add.rectangle(this.spriteSize* x, this.spriteSize*y, spriteSize, spriteSize, 0xffffff)
-    }
-}
-class GameScene extends Phaser.Scene{
-    constructor(private view: View){
-        super('GameScene');
-        console.log('gbzuguziguzhigb');
+       this.sprite = this.scene.add.rectangle(this.spriteSize* x, this.spriteSize*y, spriteSize, spriteSize, colorMap[type.toString()]);
+        this.view.addSprite(this, x, y);
         
-    }
-
-    create(){
-        console.log(this);
-        console.log('Aifohusiazhfiahjfiohj');
         
-        this.view.setScene(this);
     }
     
-
-    update(time: number, delta: number): void {
-        
+    public move(x: number, y: number){
+        console.log(this.sprite);
+        this.scene.children.bringToTop(this.sprite);
+        this.sprite.x = this.view.spriteSize!*x;
+        this.sprite.y = this.view.spriteSize!*y;
     }
+}
+
+const colorMap = {
+    'Baba' : 0xcfa378,
+    'Void' : 0x0a0a09,
+    'Wall' : 0x261503,
+    'Flag' : 0xbfaa0a,
+    'T_Baba': 0x86945f,
+    'Is' : 0xe1eff0,
+    'T_You' : 0x6e5e1a,
+    'T_Flag' : 0x201d82,
+    'T_Win' : 0x29c4c2,
+    'T_Stop' : 0xba2326,
+    'T_Wall' : 0x58ba23,
 }
 export enum Keys {
     KEY_UP = 'w',

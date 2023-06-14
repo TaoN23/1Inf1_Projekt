@@ -11,7 +11,7 @@ export interface Level {
 }
 
 
-type ModelBoard = Array<Array<Array<Sprite>>> ;
+export type ModelBoard = Array<Array<Array<Sprite>>> ;
 
 export class Board {
 

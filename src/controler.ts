@@ -10,11 +10,12 @@ const firstLevel: Level = {
         width: 10,
     },
     levelString: [
-        'wwwwwwwwww',
-        '#[#k][#i][#y]##w####w',
-        'w##w[#b][#b]###w',
-        'w########w',
-        'wwwwwwwwww',
+        'wwwwwwwwwww',
+        '#[#k][#i][#y]##w###w',
+        'w##w[#b][#b]####w',
+        'w#########w',
+        'w#########w',
+        'wwwwwwwwwww',
     ]
 }
 
@@ -27,10 +28,10 @@ export class Controller{
 
     constructor() {
         this.levels.push(firstLevel);
+        this.currentLevel = this.levels[0];
         this.model = new Model(ViewState.START_SCREEN);
         this.view = new View(this.model, this);
         this.model.addView(this.view);
-        this.currentLevel = this.levels[0];
     };
 
     public startGame(): void{

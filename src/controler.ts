@@ -1,5 +1,5 @@
 import { Level } from './Board';
-import { SpriteTextObjectTypes, SpriteTypes, SpriteTextVerbObjectTypes, SpriteTextToSprite } from './Sprites';
+import { SpriteTextObjectTypes, SpriteTypes, SpriteTextVerbObjectTypes, SpriteTextToSprite, moveAble } from './Sprites';
 import { Model } from './model'
 import {Sprite} from './model';
 import { Keys, View, ViewState } from './view';
@@ -11,7 +11,7 @@ const firstLevel: Level = {
     },
     levelString: [
         'wwwwwwwwww',
-        'w[#k][#i][#y]##w####w',
+        '#[#k][#i][#y]##w####w',
         'w##w[#b][#b]###w',
         'w########w',
         'wwwwwwwwww',
@@ -53,8 +53,69 @@ export class Controller{
         return spriteSize;
     }
 
+    private checkUpRecursive(spritex: number, spritey: number): Array<Array<number>> {
+        const up = this.getUp(spritex, spritey);
 
-    
+        if (up === undefined || up.type === this.model.getCurrentStop()) {
+            return [[-1]];
+        }
+
+        if (up.type === this.model.getCurrentPLayer() || moveAble.hasOwnProperty(up.type.toString())) {
+            return [...this.checkUpRecursive(up.x, up.y), [spritex, spritey]];
+        }
+
+        return [[spritex, spritey]]
+
+
+    }
+
+    private checkDownRecursive(spritex: number, spritey: number): Array<Array<number>> {
+        const down = this.getDown(spritex, spritey);
+
+        if (down === undefined || down.type === this.model.getCurrentStop()) {
+            return [[-1]];
+        }
+
+        if (down.type === this.model.getCurrentPLayer() || moveAble.hasOwnProperty(down.type.toString())) {
+            return [...this.checkDownRecursive(down.x, down.y), [spritex, spritey]];
+        }
+
+        return [[spritex, spritey]]
+
+
+    }
+
+    private checkLeftRecursive(spritex: number, spritey: number): Array<Array<number>> {
+        const left = this.getLeft(spritex, spritey);
+
+        if (left === undefined || left.type === this.model.getCurrentStop()) {
+            return [[-1]];
+        }
+
+        if (left.type === this.model.getCurrentPLayer() || moveAble.hasOwnProperty(left.type.toString())) {
+            return [...this.checkLeftRecursive(left.x, left.y), [spritex, spritey]];
+        }
+
+        return [[spritex, spritey]]
+
+
+    }
+    private checkRightRecursive(spritex: number, spritey: number): Array<Array<number>> {
+        const right = this.getRight(spritex, spritey);
+
+        if (right === undefined || right.type === this.model.getCurrentStop()) {
+            return [[-1]];
+        }
+
+        if (right.type === this.model.getCurrentPLayer() || moveAble.hasOwnProperty(right.type.toString())) {
+            return [...this.checkRightRecursive(right.x, right.y), [spritex, spritey]];
+        }
+
+        return [[spritex, spritey]]
+
+
+    }
+
 
     public move(key: Keys){
         this.updateLogic();
@@ -63,19 +124,14 @@ export class Controller{
         switch (key) {
             case Keys.KEY_UP:
                 currentPlayer?.forEach((sprite) => {
-                    console.log(sprite);
-                    
-                  const up = this.getUp(sprite.x, sprite.y);  
-                  console.log(up);
-                  if (up === undefined) {
-                    console.log(up);
-                    
-                    return;
-                  }
-
-                  if (up.type != this.model.getCurrentStop()) {
-                      this.model.prepareMove(sprite, up.x, up.y);
-                  }
+                    const checked = this.checkUpRecursive(sprite.x, sprite.y);
+                    if (checked[0][0] === -1) {
+                        return;
+                    }
+                    for (const localSprite of checked) {
+                        const up = this.getUp(localSprite[0], localSprite[1]);
+                        this.model.prepareMove(this.model.getSprite(localSprite[0], localSprite[1])!, up!.x, up!.y);
+                    }
 
                 })  
 
@@ -85,19 +141,15 @@ export class Controller{
             case Keys.KEY_DOWN:
 
             currentPlayer?.forEach((sprite) => {
-                console.log(sprite);
-                
-              const down = this.getDown(sprite.x, sprite.y);  
-              console.log(down);
-              if (down === undefined) {
-                console.log(down);
-                
-                return;
-              }
-
-              if (down.type != this.model.getCurrentStop()) {
-                  this.model.prepareMove(sprite, down.x, down.y);
-              }
+                const checked = this.checkDownRecursive(sprite.x, sprite.y);
+                    
+                if (checked[0][0] === -1) {
+                    return;
+                }
+                for (const localSprite of checked) {
+                    const down = this.getDown(localSprite[0], localSprite[1]);
+                    this.model.prepareMove(this.model.getSprite(localSprite[0], localSprite[1])!, down!.x, down!.y);
+                }
 
             })  
 
@@ -107,20 +159,19 @@ export class Controller{
             case Keys.KEY_LEFT:
 
             currentPlayer?.forEach((sprite) => {
-                console.log(sprite);
+                const checked = this.checkLeftRecursive(sprite.x, sprite.y);
                 
-              const left = this.getLeft(sprite.x, sprite.y);  
-              console.log(left);
-              if (left === undefined) {
-                console.log(left);
-                
-                return;
-              }
-
-              if (left.type != this.model.getCurrentStop()) {
-                  this.model.prepareMove(sprite, left.x, left.y);
-              }
-
+                console.log(checked);
+                    
+                if (checked[0][0] === -1) {
+                    return;
+                }
+                for (const localSprite of checked) {
+                    const left = this.getLeft(localSprite[0], localSprite[1]);
+                    console.log(left);
+                    
+                    this.model.prepareMove(this.model.getSprite(localSprite[0], localSprite[1])!, left!.x, left!.y);
+                }
             })  
 
                 break;
@@ -129,19 +180,15 @@ export class Controller{
             case Keys.KEY_RIGHT:
 
                 currentPlayer?.forEach((sprite) => {
-                    console.log(sprite);
+                    const checked = this.checkRightRecursive(sprite.x, sprite.y);
                     
-                  const right = this.getRight(sprite.x, sprite.y);  
-                  console.log(right);
-                  if (right === undefined) {
-                    console.log(right);
-                    
-                    return;
-                  }
-    
-                  if (right.type != this.model.getCurrentStop()) {
-                      this.model.prepareMove(sprite, right.x, right.y);
-                  }
+                    if (checked[0][0] === -1) {
+                        return;
+                    }
+                    for (const localSprite of checked) {
+                        const right = this.getRight(localSprite[0], localSprite[1]);
+                        this.model.prepareMove(this.model.getSprite(localSprite[0], localSprite[1])!, right!.x, right!.y);
+                    }
     
                 })  
     
@@ -226,7 +273,7 @@ export class Controller{
        const newX = x-1;
        const newY = y;
 
-       if (x  < 0) {
+       if (newX  < 0) {
             return undefined;
        }
 

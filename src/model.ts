@@ -129,6 +129,13 @@ export class Model {
         return this.boardModel?.getPlayer(this.currentPlayer);
     }
 
+    /**
+     * getPLayer
+     */
+    public getCurrentPLayer() {
+        return this.currentPlayer;
+    }
+
     public setCurrentPlayer(newPlayer: SpriteTypes){
         this.currentPlayer = newPlayer;
         console.log('currentP:');

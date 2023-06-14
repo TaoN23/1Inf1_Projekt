@@ -80,14 +80,18 @@ export class Board {
 
     public log(){
         let foo = '';
+        console.log(JSON.stringify(this.board[1]));
         this.board.forEach((row) => {
             row.forEach((column) => {
-                   foo += structuredClone(column).pop().type.toString();
+                if (column){
+                    foo += structuredClone(column).pop().type.toString();
+                    
+                }
             })
             foo += '\n';
             
         })
-
+        
         console.log(foo);
         
 

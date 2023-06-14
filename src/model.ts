@@ -46,6 +46,10 @@ export class Model {
     private boardModel: Board | undefined;
     private level: Level | undefined;
     private currentPlayer = SpriteTypes.BABA;
+    private currentStop = SpriteTypes.WALL;
+    private currentWin = SpriteTypes.FLAG;
+    private moveList: Array<Sprite> = []
+
     constructor(private viewState: ViewState){}
 
     public addView(view: View){
@@ -59,72 +63,10 @@ export class Model {
         }
     }
 
-
-
-
-/*
-    public get_right(x: number, y: number, z?: number){
-
-        if(z){
-
-           return this.boardModel.getter(x++, y, z)
-
-        }
-
-       return this.boardModel.getter(x++,y)
-
-    }
-
-    public get_left(x: number, y: number, z?: number){
-
-        if(z){
-
-           return this.boardModel.getter(x--, y, z)
-
-        }
-
-       return this.boardModel.getter(x--,y)
-
-    }
-
-    public get_up(x: number, y: number, z?: number){
-
-        if(z){
-
-           return this.boardModel.getter(x, y--, z)
-
-        }
-
-       return this.boardModel.getter(x,y--)
-
-    }
-
-    public get_down(x: number, y: number, z?: number){
-
-        if(z){
-
-           return this.boardModel.getter(x, y++, z)
-
-        }
-
-       return this.boardModel.getter(x,y++)
-
-    }
-
-
-    public sprite_right(spritetype: SpriteTypes){
-
-        if(spritetype==this.sprites.)
+    public getSprite(x: number, y: number): Sprite | undefined{
+        console.log('gs');
         
-        
-        
-        
-        this.boardModel.getter(sprite.get_x(spritetype))
-
-    }
-*/
-    public getSprite(x: number, y: number): Sprite{
-        return this.boardModel.getSprite(x,y);
+        return this.boardModel!.getSprite(x,y);
     }
 
     public changeViewState(newState: ViewState): void{
@@ -156,11 +98,69 @@ export class Model {
         
     }
 
+    public prepareMove(sprite: Sprite, newX: number, newY: number): void{
+        this.moveList.push(sprite);
+
+        this.boardModel?.setSprite({...sprite, x: newX, y: newY}, newX, newY)
+        this.boardModel?.deleteSprite(sprite.x, sprite.y);
+        console.log(this.moveList);
+        
+    }
+
+    public getCurrentStop(): SpriteTypes {
+        return this.currentStop;
+    }
+
+    /**
+     * move
+     */
+    public move() {
+        console.log('moove');
+        this.boardModel?.log();
+        this.moveList = [];
+        
+    }
+
     public getBoard() {
         return this.boardModel?.boardCopy;
     }
 
     public getPlayer(){
         return this.boardModel?.getPlayer(this.currentPlayer);
+    }
+
+    /**
+     * getPLayer
+     */
+    public getCurrentPLayer() {
+        return this.currentPlayer;
+    }
+
+    public setCurrentPlayer(newPlayer: SpriteTypes){
+        this.currentPlayer = newPlayer;
+        console.log('currentP:');
+        
+        console.log(this.currentPlayer);
+        
+    }
+
+    public setCurrentStop(newStop: SpriteTypes){
+        this.currentStop = newStop;
+        console.log('currentS:');
+
+        console.log(this.currentStop);
+
+    }
+
+    public setCurrentWin(newWin: SpriteTypes){
+        this.currentWin = newWin;
+        console.log('currentW:')
+
+        console.log(this.currentWin);
+
+    }
+
+    public getIs(){
+        return this.boardModel?.getIs();
     }
 }

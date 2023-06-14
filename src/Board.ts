@@ -19,7 +19,7 @@ export class Board {
 
     constructor(rawBoard: Array<string>, private spriteSize: number) {
         this.parseBoard(rawBoard);
-        console.log(this.board);
+        this.log();
         
     }
 
@@ -79,7 +79,21 @@ export class Board {
     }
 
     public log(){
-        console.log(JSON.stringify(this.board[2]));
+        let foo = '';
+        console.log(JSON.stringify(this.board[1]));
+        this.board.forEach((row) => {
+            row.forEach((column) => {
+                if (column){
+                    foo += structuredClone(column).pop().type.toString();
+                    
+                }
+            })
+            foo += '\n';
+            
+        })
+        
+        console.log(foo);
+        
 
     }
 
@@ -105,84 +119,46 @@ export class Board {
         return player;
     }
     
+
+    public getIs(): Array<Sprite>{
+
+        const is: Array<Sprite> = [];
+
+        this.board.forEach((row) => {
+            row.forEach((column) => {
+                column.forEach((sprite: Sprite) => {
+                    if (sprite.type === SpriteTypes.IS) {
+                        is.push(sprite);
+                    }
+                })
+            })
+        })
+
+        return is;
+
+        
+    }
     
 
-    // public getSprite( shortcut: String , x: number , y: number , z: number){
-    //     switch (shortcut) {
-            
-    //         case '#': return null;
-    //         case 'b': return this.board[y][x][length] = {x: 0, y: 0, width_p: 20, height_p: 20, type: SpriteTypes.BABA}
-    //         case 'w': return this.board[y][x][length] = {x: 0, y: 0, width_p: 20, height_p: 20, type: SpriteTypes.WALL}
 
-    //     }
-    // }
- 
-
-   
-    // public get_right(x: number, y: number, z?: number){
-
-    //     if(z){
-
-    //         return this.board[y][x++][z]
-
-    //     }
-
-    //     return this.board[y][x++]
-
-    // }
-
-
-    // public get_left(x: number, y: number, z?: number){
-
-    //     if(this.board[y][x--]!= undefined){
-
-    //         return null;
-    //     } 
+    public getSprite(x: number , y: number): Sprite | undefined{
         
-        
-    //     return this.board[y][x--]
-    
-    // }
-    
-    // public get_up(x: number, y: number, z?: number){
-
-
-    //     if(this.board[y--][x]!= undefined){
-
-    //         return null;
-    //     } 
-        
-        
-    //     return this.board[y--][x]
-    
-    // }
-    
-    // public get_down(x: number, y: number, z?: number){
-
-
-    //     if(this.board[y++][x]!= undefined){
-
-    //         return null;
-    //     } 
-        
-        
-    //     return this.board[y++][x]
-    
-    // }
-
-
-    public getSprite(x: number , y: number , z?: number): Sprite{
-
-        
-        return this.board[y][x][0];
-
+        return this.board[y][x].findLast((i) => i,);
     }
 
 
-    public setter(a: Sprite, b: Sprite){
+    public setSprite(sprite: Sprite, x:number, y: number){
         
-        a=b
+        this.board[y][x].push(sprite);
 
+    }
+
+    /**
+     * deleteSprite
+     */
+    public deleteSprite(x: number, y: number) {
+        this.board[y][x].pop();
+        this.log();
     }
 
 
@@ -193,4 +169,13 @@ const shortcutMap = {
     '#': SpriteTypes.VOID,
     'b': SpriteTypes.BABA,
     'w': SpriteTypes.WALL,
+    'f': SpriteTypes.FLAG,
+    'i': SpriteTypes.IS,
+    'k': SpriteTypes.T_BABA,
+    'm': SpriteTypes.T_WALL,
+    'u': SpriteTypes.T_FLAG,
+    's': SpriteTypes.T_STOP,
+    'y': SpriteTypes.T_YOU,
+    'p': SpriteTypes.T_WIN,
+
 }

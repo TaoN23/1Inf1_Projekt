@@ -1,59 +1,80 @@
+import Phaser from "phaser";
 import { Controller } from "./controler";
 import { Model, Sprite } from "./model";
 import { SpriteTypes } from "./Sprites";
+import { Board, ModelBoard } from "./Board";
 
 
 export class View {
-    canvas: HTMLCanvasElement | undefined;
-    appRef: HTMLElement;
+    appRef: HTMLElement | null;
+    board: ModelBoard | undefined;
     spriteSize: number | undefined;
-    context: CanvasRenderingContext2D | null | undefined ;
+    game: Phaser.Game | undefined;
+    scene: Phaser.Scene | undefined;
 
     constructor(private model: Model, private controller: Controller){
-        //this.canvas = this.createCanvas();    
-        this.appRef = document.getElementById('app')!;
+        this.appRef = document.getElementById('app');
+        this.spriteSize = this.controller.calculateSpriteSize()
         if (model.getViewState() === ViewState.START_SCREEN) {
             this.setupStartScreen();
         }
     }
-
+    
     private setupGame(){
-        this.createCanvas();
-
-        const board = this.model.getBoard();
-
-        if (!board) {
+        this.board = this.model.getBoard();
+    
+        if (!this.board) {
             throw new Error("");
         }
-        board.forEach((row) => {
-            row.forEach((column) => {
-                column.forEach((sprite) => {
-                    console.log(sprite.width_p);
-                    if (this.context != null && this.context != undefined) {
-                        new ViewOBJ(sprite, this.context, this.model);
-                    }
+        console.log(this.spriteSize);
+        
+
+        
+        var config = {
+            type: Phaser.AUTO,
+            width: this.spriteSize!* this.model.getLevelMeta().width,
+            height: this.spriteSize!* this.model.getLevelMeta().height,
+            view: this,
+            scene: {
+              preload: preload,
+              create: create
+            }
+        };
+          
+          var game = new Phaser.Game(config);
+
+          const view = this;
+          
+
+          function preload() {
+          }
+          
+          ;
+          
+          // Create function to set up the scene
+          function create() {
+            
+            view.board!.forEach((row) => {
+                row.forEach((column) => {
+                    column.forEach((sprite) => {
+                            new ViewOBJ(this, view.spriteSize!, sprite.x, sprite.y, sprite.type, view);
+                        })
+                    })
                 })
-            })
-        })
+          
+            // Add any additional configuration or interactivity here
+          }
+
+          function update() {
+            
+          }
         
 
         window.addEventListener('keypress', this.notifyController.bind(this));
     }
-    
-    private createCanvas(): void{
-        this.canvas = document.createElement("canvas");
-        this.appRef.appendChild(this.canvas);
-        //this.appRef.requestFullscreen();
-        this.spriteSize = this.controller.calculateSpriteSize();
-        this.canvas.style.width = (this.model.getLevelMeta().width * this.spriteSize).toString() + 'px';
-        this.canvas.style.height = (this.model.getLevelMeta().height * this.spriteSize).toString + 'px';
-        if (this.canvas.getContext('2d') != null) {
-            this.context = this.canvas.getContext('2d');
-        }
-    }
-    
+
     private setupStartScreen(): void{
-        this.appRef.innerHTML = startScreen;
+        this.appRef!.innerHTML = startScreen;
         console.log(this.controller);
         
         document.getElementById('startGame')!.addEventListener('click', this.controller.startGame.bind(this.controller));
@@ -69,23 +90,23 @@ export class View {
         }
     }
 
-    private drawImage(imgURL: string, sizeX: number, sizeY: number, posX: number, posY: number){
-       
-    }
 
     private clearView(){
-        this.appRef.innerHTML = '';
+        this.appRef!.innerHTML = '';
     }
 
     private notifyController(event: any){
         const direction = keyMap.get(event.code);
         
-        console.log(event.code);
         
         if (direction) {
             this.controller.move(direction)
         }
         
+    }
+
+    public addSprite(sprite: ViewOBJ, x: number, y: number): void{
+        this.model.addSprite(sprite, x, y);
     }
 }
 
@@ -103,20 +124,38 @@ export enum ViewState {
 const startScreen = '<h1>Startscreen</h1> <button id="startGame">Play</button>'
 
 
-class ViewOBJ {
-    constructor(private sprite: Sprite, private context: CanvasRenderingContext2D, private model: Model) {
-        const image = new Image();
-
-        image.onload = () => {
-            this.context.drawImage(image, image.width* this.sprite.x, image.width * this.sprite.y, image.width, image.width);
-        };
-
-        image.src = imageMap.get(this.sprite.type)!;
-        image.width = this.sprite.width_p / 512 ;
-        image.height = this.sprite.height_p / 512 * 512;
+export class ViewOBJ {
+    sprite: Phaser.GameObjects.Rectangle;
+    constructor(private scene: Phaser.Scene, private spriteSize: number, x: number, y: number, type: SpriteTypes, private view: View) {
+        console.log(this.scene);
+        
+       this.sprite = this.scene.add.rectangle(this.spriteSize* x, this.spriteSize*y, spriteSize, spriteSize, colorMap[type.toString()]);
+        this.view.addSprite(this, x, y);
+        
+        
+    }
+    
+    public move(x: number, y: number){
+        console.log(this.sprite);
+        this.scene.children.bringToTop(this.sprite);
+        this.sprite.x = this.view.spriteSize!*x;
+        this.sprite.y = this.view.spriteSize!*y;
     }
 }
 
+const colorMap = {
+    'Baba' : 0xcfa378,
+    'Void' : 0x0a0a09,
+    'Wall' : 0x261503,
+    'Flag' : 0xbfaa0a,
+    'T_Baba': 0x86945f,
+    'Is' : 0xe1eff0,
+    'T_You' : 0x6e5e1a,
+    'T_Flag' : 0x201d82,
+    'T_Win' : 0x29c4c2,
+    'T_Stop' : 0xba2326,
+    'T_Wall' : 0x58ba23,
+}
 export enum Keys {
     KEY_UP = 'w',
     KEY_DOWN = 's',

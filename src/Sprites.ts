@@ -44,4 +44,5 @@ export const moveAble: any = {
     'T_Flag' : SpriteTypes.FLAG,
     'T_You' : SpriteTypes.T_YOU,
     'Is' : SpriteTypes.IS,
+    'T_Stop' : SpriteTypes.T_STOP,
 }

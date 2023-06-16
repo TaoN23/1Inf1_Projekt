@@ -45,20 +45,12 @@ export class View {
             height: this.spriteSize!* this.model.getLevelMeta().height,
             view: this,
             scene: {
-              preload: preload,
               create: create
             }
         };
           
           var game = new Phaser.Game(config);
           const view = this; // View Referenz, für die create() Funktion
-          
-
-          function preload() {
-          }
-          
-          ;
-          
         
           function create() {
             // iteriert über den Spielfeld-Tensor und fügt der Scene die entsprechenden Sprites hinzu
@@ -73,9 +65,6 @@ export class View {
           
           }
 
-          function update() {
-            
-          }
         // setup der Keyboard listener
         window.addEventListener('keypress', this.notifyController.bind(this));
     }
@@ -93,6 +82,11 @@ export class View {
         document.getElementById('startGame')!.addEventListener('click', this.controller.startGame.bind(this.controller));
     }
 
+    /**
+     * Entfernt den Startscreen und startet das Spiel
+     * @public 
+     * @returns {void}
+     */
     public stateChange(): void{
         console.log(this.model.getViewState());
         
@@ -103,11 +97,22 @@ export class View {
         }
     }
 
-
+    /**
+ * Löscht die View, indem der HTML-Inhalt des appRef-Elements geleert wird.
+ * @private
+ * @returns {void}
+ */
     private clearView(){
         this.appRef!.innerHTML = '';
     }
 
+
+    /**
+ * Benachrichtigt den Controller über ein KeyEvent und gibt die Richtung weiter.
+ * @private
+ * @param {any} event - Das ausgelöste Ereignis
+ * @returns {void}
+ */
     private notifyController(event: any){
         const direction = keyMap.get(event.code);
         
@@ -118,6 +123,14 @@ export class View {
         
     }
 
+    /**
+ * Sprites können sich im Model eintragen
+ * @public
+ * @param {ViewOBJ} sprite - Das hinzuzufügende Objekt
+ * @param {number} x - Die x-Koordinate des Sprites
+ * @param {number} y - Die y-Koordinate des Sprites
+ * @returns {void}
+ */
     public addSprite(sprite: ViewOBJ, x: number, y: number): void{
         this.model.addSprite(sprite, x, y);
     }
@@ -137,8 +150,22 @@ export enum ViewState {
 const startScreen = '<h1>Startscreen</h1> <button id="startGame">Play</button>'
 
 
+/**
+ * Das ViewOBJ repräsentiert ein Grafikobjekt in der Szene.
+ */
 export class ViewOBJ {
     sprite: Phaser.GameObjects.Rectangle;
+
+     /**
+     * Erzeugt ein ViewOBJ-Objekt.
+     * @constructor
+     * @param {Phaser.Scene} scene - Die Phaser-Szene
+     * @param {number} spriteSize - Die Pixelgröße des Sprites
+     * @param {number} x - Die x-Koordinate des Sprites
+     * @param {number} y - Die y-Koordinate des Sprites
+     * @param {SpriteTypes} type - Der Typ des Sprites
+     * @param {View} view - Die Ansicht
+     */
     constructor(private scene: Phaser.Scene, private spriteSize: number, x: number, y: number, type: SpriteTypes, private view: View) {
         console.log(this.scene);
         
@@ -149,6 +176,13 @@ export class ViewOBJ {
         
     }
     
+     /**
+     * Bewegt das Grafikobjekt zu der neuen Position
+     * @public
+     * @param {number} x - Die neue x-Koordinate
+     * @param {number} y - Die neue y-Koordinate
+     * @returns {void}
+     */
     public move(x: number, y: number){
         console.log(this.sprite);
         this.scene.children.bringToTop(this.sprite);
@@ -157,6 +191,11 @@ export class ViewOBJ {
     }
 }
 
+/**
+ * Das Farbzuordnungsobjekt für Sprite-Typen.
+ * @constant
+ * @type {object}
+ */
 const colorMap = {
     'Baba' : 0xcfa378,
     'Void' : 0x0a0a09,
@@ -170,6 +209,11 @@ const colorMap = {
     'T_Stop' : 0xba2326,
     'T_Wall' : 0x58ba23,
 }
+
+/**
+ * Die verfügbaren Tasten für die Steuerung.
+ * @enum {string}
+ */
 export enum Keys {
     KEY_UP = 'w',
     KEY_DOWN = 's',
@@ -177,6 +221,11 @@ export enum Keys {
     KEY_RIGHT = 'd',
 }
 
+/**
+ * Die Zuordnung der Tastaturereignisse zu den Steuertasten.
+ * @constant
+ * @type {Map<string, Keys>}
+ */
 const keyMap = new Map();
 
 keyMap.set('KeyW', Keys.KEY_UP);

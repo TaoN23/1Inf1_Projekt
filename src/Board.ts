@@ -218,6 +218,12 @@ export class Board {
 
 }
 
+
+/**
+    Die Zuordnung der Abkürzungen zur Spielerstellung zu den Sprite-Typen.
+    @constant
+    @type {object}
+    */
 const shortcutMap = {
     '#': SpriteTypes.VOID,
     'b': SpriteTypes.BABA,

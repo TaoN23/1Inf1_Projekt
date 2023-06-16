@@ -7,15 +7,15 @@ import { Keys, View, ViewState } from './view';
 const firstLevel: Level = {
     meta: {
         height: 5,
-        width: 10,
+        width: 9,
     },
     levelString: [
-        '######w###',
-        'kiy###w###',
-        'm#####w###',
-        '######w##f',
-        'b#####w###',
-        '######wuip',
+        '[#k][#i][#y]###[#w][#u]##',
+        '######[#w]##[#i]',
+        '[#m][#i][#s]###[#w][#p]##',
+        '######[#w]##[#f]',
+        '[#b]#####[#w]###',
+        '######[#w]###',
     ]
 
 
@@ -258,6 +258,7 @@ export class Controller{
 
     private updateLogic(){
         this.model.setCurrentStop(null);
+        this.model.setCurrentWin(null);
 
         const is = this.model.getIs();
 

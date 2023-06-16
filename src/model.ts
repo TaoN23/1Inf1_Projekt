@@ -51,7 +51,8 @@ export class Model {
     private currentPlayer = SpriteTypes.BABA;
     //@ts-expect-error
     private currentStop: SpriteTypes | null ;
-    private currentWin = SpriteTypes.FLAG;
+    // @ts-expect-error
+    private currentWin: SpriteTypes | null;
     private moveList: Array<movelistItem> = []
 
     constructor(private viewState: ViewState){}
@@ -156,11 +157,8 @@ export class Model {
 
     }
 
-    public setCurrentWin(newWin: SpriteTypes){
+    public setCurrentWin(newWin: SpriteTypes | null){
         this.currentWin = newWin;
-        console.log('currentW:')
-
-        console.log(this.currentWin);
 
     }
 

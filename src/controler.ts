@@ -10,13 +10,15 @@ const firstLevel: Level = {
         width: 10,
     },
     levelString: [
-        'wwwwwwwwwww',
-        '#[#k][#i][#y]##w###w',
-        'w##w[#b]###[#m]#w',
-        'w#######[#i]#w',
-        'w#######[#s]#w',
-        'wwwwwwwwwww',
+        '##########',
+        '',
+        '',
+        '',
+        '',
+        '',
     ]
+
+
 }
 
 export class Controller{

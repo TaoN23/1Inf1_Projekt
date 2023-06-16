@@ -51,8 +51,10 @@ export class Model {
     private currentPlayer = SpriteTypes.BABA; // Der aktuelle Spieler
     // @ts-expect-error
     private currentStop: SpriteTypes | null; // Der aktuelle Stop-Typ
-    private currentWin = SpriteTypes.FLAG; // Der aktuelle Win-Typ
+    // @ts-expect-error
+    private currentWin = SpriteTypes | null; // Der aktuelle Win-Typ
     private moveList: Array<movelistItem> = []; // Liste der Bewegungen
+
 
     /**
      * Konstruktor der Model-Klasse.
@@ -208,6 +210,7 @@ export class Model {
      * @returns {SpriteTypes} - Der aktuelle Spieler
      */
      public getCurrentPlayer(): SpriteTypes {
+
         return this.currentPlayer;
     }
 
@@ -244,12 +247,13 @@ export class Model {
      * @param {SpriteTypes} newWin - Der neue Win-Typ
      * @returns {void}
      */
-    public setCurrentWin(newWin: SpriteTypes){
+    public setCurrentWin(newWin: SpriteTypes | null){
         this.currentWin = newWin;
-        console.log('currentW:')
 
-        console.log(this.currentWin);
+    }
 
+    public getCurrentWin(){
+        return this.currentWin;
     }
 
     /**

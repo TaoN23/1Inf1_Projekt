@@ -11,19 +11,22 @@ import { Sprite } from "./model";
 import { Keys, View, ViewState } from "./view";
 
 const firstLevel: Level = {
-  meta: {
-    height: 5,
-    width: 10,
-  },
-  levelString: [
-    "wwwwwwwwwww",
-    "#[#k][#i][#y]##w###w",
-    "w##w[#b]###[#m]#w",
-    "w#######[#i]#w",
-    "w#######[#s]#w",
-    "wwwwwwwwwww",
-  ],
-};
+    meta: {
+        height: 5,
+        width: 9,
+    },
+    levelString: [
+        '[#k][#i][#y]###[#w][#u]##',
+        '######[#w]##[#i]',
+        '[#m][#i][#s]###[#w][#p]##',
+        '######[#w]##[#f]',
+        '[#b]#####[#w]###',
+        '######[#w]###',
+    ]
+
+
+}
+
 
 export class Controller {
   /**
@@ -119,6 +122,7 @@ export class Controller {
     // wenn der obere Sprite nicht bewegbares aber auch kein Stop Objekt ist, gibt es den aktuellen Sprite zurück
     return [[spritex, spritey]];
   }
+  
 
   private checkDownRecursive(
     spritex: number,
@@ -130,6 +134,7 @@ export class Controller {
       return [[-1]];
     }
 
+
     if (
       down.type === this.model.getCurrentPlayer() ||
       moveAble.hasOwnProperty(down.type.toString())
@@ -139,6 +144,7 @@ export class Controller {
 
     return [[spritex, spritey]];
   }
+  
 
   private checkLeftRecursive(
     spritex: number,
@@ -201,7 +207,9 @@ export class Controller {
           if (checked[0][0] === -1) {
             return;
           }
-
+          if(this.getUp(sprite.x, sprite.y)?.type == this.model.getCurrentWin()){
+                        alert('win')
+                    }
           // fügt alle zu bewegenden Sprites in ein Array
           for (const localSprite of checked) {
             const up = this.getUp(localSprite[0], localSprite[1]);
@@ -222,6 +230,11 @@ export class Controller {
           if (checked[0][0] === -1) {
             return;
           }
+          
+          if(this.getDown(sprite.x, sprite.y)?.type == this.model.getCurrentWin()){
+                    alert('win')
+                }
+          
           for (const localSprite of checked) {
             const down = this.getDown(localSprite[0], localSprite[1]);
             this.model.prepareMove(
@@ -243,6 +256,11 @@ export class Controller {
           if (checked[0][0] === -1) {
             return;
           }
+          
+           if(this.getLeft(sprite.x, sprite.y)?.type == this.model.getCurrentWin()){
+                    alert('win')
+                }
+          
           for (const localSprite of checked) {
             const left = this.getLeft(localSprite[0], localSprite[1]);
             console.log(left);
@@ -264,6 +282,11 @@ export class Controller {
           if (checked[0][0] === -1) {
             return;
           }
+          
+          if(this.getRight(sprite.x, sprite.y)?.type == this.model.getCurrentWin()){
+                        alert('win')
+                    }
+          
           for (const localSprite of checked) {
             const right = this.getRight(localSprite[0], localSprite[1]);
             this.model.prepareMove(
@@ -328,6 +351,7 @@ export class Controller {
         }
       }
     }
+
   }
 
   /**
@@ -337,6 +361,7 @@ export class Controller {
    */
   private updateLogic() {
     this.model.setCurrentStop(null);
+    this.model.setCurrentWin(null);
 
     const is = this.model.getIs();
 
@@ -369,6 +394,7 @@ export class Controller {
 
     if (x === this.currentLevel.meta.width) {
       return undefined;
+
     }
 
     return this.model.getSprite(newX, newY);

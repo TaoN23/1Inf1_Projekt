@@ -151,6 +151,7 @@ export class Controller {
 
     }
 
+    
     /**
      * Bewegt die Sprites entsprechend des Tastendrucks.
      * @public
@@ -168,6 +169,7 @@ export class Controller {
                     if (checked[0][0] === -1) {
                         return;
                     }
+                    
                     for (const localSprite of checked) {
                         const up = this.getUp(localSprite[0], localSprite[1]);
                         this.model.prepareMove(this.model.getSprite(localSprite[0], localSprite[1])!, up!.x, up!.y);

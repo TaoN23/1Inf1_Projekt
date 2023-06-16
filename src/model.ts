@@ -4,10 +4,6 @@ import { View, ViewOBJ, ViewState } from "./view";
 
 
 export interface Sprite {
-   
-   
-   
-
     // relative Koordinaten im view-model
     x: number;
     y: number;
@@ -18,21 +14,6 @@ export interface Sprite {
     type: SpriteTypes;
     // Referenz auf das View Objekt
     reference?: ViewOBJ;
-    // getType: function () {
-    //     return this.type
-    // }
-
-
-    // public get_x(){
-
-    //     if(type == spritetype){
-
-    //         return x
-
-    //     }
-
-    // }
-
     z?: number;
 }
 
@@ -52,7 +33,7 @@ export class Model {
     // @ts-expect-error
     private currentStop: SpriteTypes | null; // Der aktuelle Stop-Typ
     // @ts-expect-error
-    private currentWin = SpriteTypes | null; // Der aktuelle Win-Typ
+    private currentWin : SpriteTypes | null; // Der aktuelle Win-Typ
     private moveList: Array<movelistItem> = []; // Liste der Bewegungen
 
 
@@ -252,7 +233,7 @@ export class Model {
 
     }
 
-    public getCurrentWin(){
+    public getCurrentWin(): SpriteTypes | null{
         return this.currentWin;
     }
 

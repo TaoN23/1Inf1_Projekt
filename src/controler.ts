@@ -207,6 +207,7 @@ export class Controller {
           if (checked[0][0] === -1) {
             return;
           }
+
           if(this.getUp(sprite.x, sprite.y)?.type == this.model.getCurrentWin()){
                         alert('win')
                     }

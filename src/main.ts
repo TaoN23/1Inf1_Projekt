@@ -3,6 +3,3 @@ import './style.css'
 
 
 new Controller();
-
-
-

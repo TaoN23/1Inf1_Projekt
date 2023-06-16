@@ -19,12 +19,34 @@ const firstLevel: Level = {
     ]
 }
 
-export class Controller{
-  
-    private levels: Array<Level> = [];
+export class Controller {
+    /**
+     * Ein Array von Leveln.
+     * @type {Level[]}
+     * @private
+     */
+    private levels: Level[] = [];
+
+    /**
+     * Das Model-Objekt.
+     * @type {Model}
+     * @private
+     */
     private model: Model;
+
+    /**
+     * Das View-Objekt.
+     * @type {View}
+     * @private
+     */
     private view: View;
-    private currentLevel : Level
+
+    /**
+     * Das aktuelle Level.
+     * @type {Level}
+     * @private
+     */
+    private currentLevel: Level;
 
     constructor() {
         this.levels.push(firstLevel);
@@ -34,12 +56,22 @@ export class Controller{
         this.model.addView(this.view);
     };
 
+    /**
+     * Startet das Spiel.
+     * @public
+     * @returns {void}
+     */
     public startGame(): void{
         document.getElementById('startGame')?.removeEventListener('click', this.startGame);
         
         this.model.changeViewState(ViewState.GAME_SCREEN);
     }
 
+     /**
+     * Berechnet die Größe der Sprites.
+     * @public
+     * @returns {number} - Die Größe der Sprites.
+     */
     public calculateSpriteSize(){
         const spriteSize = window.innerWidth / this.currentLevel.meta.width;
         
@@ -49,6 +81,13 @@ export class Controller{
         return spriteSize;
     }
 
+    /**
+     * Führt die Überprüfung in Richtung "oben" rekursiv durch.
+     * @private
+     * @param {number} spritex - Die x-Koordinate des Sprites.
+     * @param {number} spritey - Die y-Koordinate des Sprites.
+     * @returns {number[][]} - Ein Array mit den Koordinaten der überprüften Sprites.
+     */
     private checkUpRecursive(spritex: number, spritey: number): Array<Array<number>> {
         const up = this.getUp(spritex, spritey);
 
@@ -56,7 +95,7 @@ export class Controller{
             return [[-1]];
         }
 
-        if (up.type === this.model.getCurrentPLayer() || moveAble.hasOwnProperty(up.type.toString())) {
+        if (up.type === this.model.getCurrentPlayer() || moveAble.hasOwnProperty(up.type.toString())) {
             return [...this.checkUpRecursive(up.x, up.y), [spritex, spritey]];
         }
 
@@ -72,7 +111,7 @@ export class Controller{
             return [[-1]];
         }
 
-        if (down.type === this.model.getCurrentPLayer() || moveAble.hasOwnProperty(down.type.toString())) {
+        if (down.type === this.model.getCurrentPlayer() || moveAble.hasOwnProperty(down.type.toString())) {
             return [...this.checkDownRecursive(down.x, down.y), [spritex, spritey]];
         }
 
@@ -88,7 +127,7 @@ export class Controller{
             return [[-1]];
         }
 
-        if (left.type === this.model.getCurrentPLayer() || moveAble.hasOwnProperty(left.type.toString())) {
+        if (left.type === this.model.getCurrentPlayer() || moveAble.hasOwnProperty(left.type.toString())) {
             return [...this.checkLeftRecursive(left.x, left.y), [spritex, spritey]];
         }
 
@@ -103,7 +142,7 @@ export class Controller{
             return [[-1]];
         }
 
-        if (right.type === this.model.getCurrentPLayer() || moveAble.hasOwnProperty(right.type.toString())) {
+        if (right.type === this.model.getCurrentPlayer() || moveAble.hasOwnProperty(right.type.toString())) {
             return [...this.checkRightRecursive(right.x, right.y), [spritex, spritey]];
         }
 
@@ -112,7 +151,12 @@ export class Controller{
 
     }
 
-
+    /**
+     * Bewegt die Sprites entsprechend des Tastendrucks.
+     * @public
+     * @param {Keys} key - Die gedrückte Taste.
+     * @returns {void}
+     */
     public move(key: Keys){
         this.updateLogic();
         const currentPlayer = this.model.getPlayer();
@@ -197,7 +241,13 @@ export class Controller{
 
 
 
-
+     /**
+     * Setzt neue Regeln für die Sprites.
+     * @private
+     * @param {Sprite | undefined} sprite1 - Das erste Sprite.
+     * @param {Sprite | undefined} sprite2 - Das zweite Sprite.
+     * @returns {void}
+     */
     private setNewRules(sprite1: Sprite | undefined, sprite2: Sprite | undefined) : void {
         console.log(sprite1, sprite2);
         
@@ -232,6 +282,11 @@ export class Controller{
         }
     }
 
+    /**
+     * Aktualisiert die Logik des Spiels.
+     * @private
+     * @returns {void}
+     */
     private updateLogic(){
         this.model.setCurrentStop(null);
 
@@ -260,7 +315,14 @@ export class Controller{
 
 
 
-    
+    /**
+     * Gibt das Sprite rechts von der gegebenen Position zurück.
+     * @public
+     * @param {number} x - Die x-Koordinate des Sprites.
+     * @param {number} y - Die y-Koordinate des Sprites.
+     * @param {number} [z] - Die z-Koordinate des Sprites.
+     * @returns {Sprite | undefined} - Das Sprite rechts von der gegebenen Position.
+     */
     public getRight(x: number, y: number, z?: number): Sprite | undefined{
        const newX = x+1;
        const newY = y;

@@ -18,15 +18,24 @@ export class Board {
 
     private board: ModelBoard = [];
 
+     /**
+     * Erstellt eine Instanz von Board.
+     * @param {string[]} rawBoard - Spielfelddaten.
+     * @param {number} spriteSize - Die Größe der Sprites.
+     */
     constructor(rawBoard: Array<string>, private spriteSize: number) {
         this.parseBoard(rawBoard);
         this.log();
         
     }
 
+     /**
+     * Analysiert die Spielfelddaten und erstellt das Spielfeld in Form eines Tensors.
+     * @private
+     * @param {string[]} leveldata - Das LEvel als String.
+     * @returns {void}
+     */
      private parseBoard(leveldata: String[] ): void {
-        // TODO: Parse Logic 
-        //this.board[y][x][length] = {x: 0, y: 0, width: 20, height: 20, type: SpriteTypes.WALL};
 
             for (let row: number = 0; row < leveldata.length; row++) {
                 let delayCounter = 0;
@@ -61,6 +70,16 @@ export class Board {
             }
     }
 
+     /**
+     * Fügt die Sprite-Daten zum Spielfeld-Tensor hinzu.
+     * @private
+     * @param {number} x - Die x-Koordinate.
+     * @param {number} y - Die y-Koordinate.
+     * @param {number} width - Die Breite.
+     * @param {number} height - Die Höhe.
+     * @param {SpriteTypes} type - Der Sprite-Typ.
+     * @returns {void}
+     */
     private addSpriteData(x: number, y: number, width: number, height: number, type: SpriteTypes, z?: number,){
         if (!this.board[y])
             this.board[y] = [];
@@ -73,7 +92,14 @@ export class Board {
     }
 
 
-    // View Objekte können sich eintragen
+     /**
+     * View Objekte können sich in den Spielfeld-Tensor eintragen 
+     * .@public
+     * @param {ViewOBJ} sprite - Das Sprite-Objekt.
+     * @param {number} x - Die x-Koordinate.
+     * @param {number} y - Die y-Koordinate.
+     * @returns {void}
+     */
     public addSprite(sprite: ViewOBJ, x: number, y: number) {
         const length = this.board[y][x].length;
         this.board[y][x][length-1].reference = sprite;
@@ -98,12 +124,21 @@ export class Board {
 
     }
 
-    
+    /**
+     * Gibt eine Kopie des Spielfelds zurück .
+     * @public
+     * @returns {ModelBoard}
+     */
     public get boardCopy() : ModelBoard {
         return [...this.board]
     }
 
-
+     /**
+     * Gibt den Spieler entsprechend des aktuellen Spielers zurück.
+     * @public
+     * @param {SpriteTypes} currentPlayer - Der aktuelle Spieler-TYPE.
+     * @returns {Sprite[]} - Array der aktuellen Spieler.
+     */
     public getPlayer(currentPlayer: SpriteTypes) : Array<Sprite> {
         const player: Array<Sprite> = [];
 
@@ -120,7 +155,11 @@ export class Board {
         return player;
     }
     
-
+     /**
+     * Gibt die "IS"-Sprites zurück.
+     * @public
+     * @returns {Sprite[]} - Die "IS"-Sprites.
+     */
     public getIs(): Array<Sprite>{
 
         const is: Array<Sprite> = [];
@@ -141,13 +180,26 @@ export class Board {
     }
     
 
-
+    /**
+     * Gibt den Sprite an der angegebenen Position zurück.
+     * @public
+     * @param {number} x - Die x-Koordinate.
+     * @param {number} y - Die y-Koordinate.
+     * @returns {Sprite|undefined} - Der Sprite an der angegebenen Position.
+     */
     public getSprite(x: number , y: number): Sprite | undefined{
         
         return this.board[y][x].findLast((i) => i,);
     }
 
-
+    /**
+     * Setzt den angegebenen Sprite an die angegebene Position.
+     * @public
+     * @param {Sprite} sprite - Der zu setzende Sprite.
+     * @param {number} x - Die x-Koordinate.
+     * @param {number} y - Die y-Koordinate.
+     * @returns {void}
+     */
     public setSprite(sprite: Sprite, x:number, y: number){
         
         this.board[y][x].push(sprite);

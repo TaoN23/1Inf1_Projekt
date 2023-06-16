@@ -124,9 +124,16 @@ export class Controller{
                     if (checked[0][0] === -1) {
                         return;
                     }
-                    for (const localSprite of checked) {
+
+                    if(this.getUp(sprite.x, sprite.y)?.type == this.model.getCurrentWin()){
+                        alert('win')
+                    }
+
+
+                     for (const localSprite of checked) {
                         const up = this.getUp(localSprite[0], localSprite[1]);
                         this.model.prepareMove(this.model.getSprite(localSprite[0], localSprite[1])!, up!.x, up!.y);
+
                     }
 
                 })  
@@ -142,6 +149,11 @@ export class Controller{
                 if (checked[0][0] === -1) {
                     return;
                 }
+
+                if(this.getDown(sprite.x, sprite.y)?.type == this.model.getCurrentWin()){
+                    alert('win')
+                }
+
                 for (const localSprite of checked) {
                     const down = this.getDown(localSprite[0], localSprite[1]);
                     this.model.prepareMove(this.model.getSprite(localSprite[0], localSprite[1])!, down!.x, down!.y);
@@ -162,6 +174,11 @@ export class Controller{
                 if (checked[0][0] === -1) {
                     return;
                 }
+
+                if(this.getLeft(sprite.x, sprite.y)?.type == this.model.getCurrentWin()){
+                    alert('win')
+                }
+
                 for (const localSprite of checked) {
                     const left = this.getLeft(localSprite[0], localSprite[1]);
                     console.log(left);
@@ -181,6 +198,11 @@ export class Controller{
                     if (checked[0][0] === -1) {
                         return;
                     }
+
+                    if(this.getRight(sprite.x, sprite.y)?.type == this.model.getCurrentWin()){
+                        alert('win')
+                    }
+
                     for (const localSprite of checked) {
                         const right = this.getRight(localSprite[0], localSprite[1]);
                         this.model.prepareMove(this.model.getSprite(localSprite[0], localSprite[1])!, right!.x, right!.y);

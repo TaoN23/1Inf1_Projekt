@@ -164,6 +164,10 @@ export class Model {
 
     }
 
+    public getCurrentWin(){
+        return this.currentWin;
+    }
+
     public getIs(){
         return this.boardModel?.getIs();
     }

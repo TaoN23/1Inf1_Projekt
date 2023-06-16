@@ -136,7 +136,7 @@ export class Model {
     /**
      * getPLayer
      */
-    public getCurrentPLayer() {
+    public getCurrentPlayer() {
         return this.currentPlayer;
     }
 

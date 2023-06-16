@@ -56,7 +56,7 @@ export class Controller{
             return [[-1]];
         }
 
-        if (up.type === this.model.getCurrentPLayer() || moveAble.hasOwnProperty(up.type.toString())) {
+        if (up.type === this.model.getCurrentPlayer() || moveAble.hasOwnProperty(up.type.toString())) {
             return [...this.checkUpRecursive(up.x, up.y), [spritex, spritey]];
         }
 
@@ -72,7 +72,7 @@ export class Controller{
             return [[-1]];
         }
 
-        if (down.type === this.model.getCurrentPLayer() || moveAble.hasOwnProperty(down.type.toString())) {
+        if (down.type === this.model.getCurrentPlayer() || moveAble.hasOwnProperty(down.type.toString())) {
             return [...this.checkDownRecursive(down.x, down.y), [spritex, spritey]];
         }
 
@@ -88,7 +88,7 @@ export class Controller{
             return [[-1]];
         }
 
-        if (left.type === this.model.getCurrentPLayer() || moveAble.hasOwnProperty(left.type.toString())) {
+        if (left.type === this.model.getCurrentPlayer() || moveAble.hasOwnProperty(left.type.toString())) {
             return [...this.checkLeftRecursive(left.x, left.y), [spritex, spritey]];
         }
 
@@ -103,7 +103,7 @@ export class Controller{
             return [[-1]];
         }
 
-        if (right.type === this.model.getCurrentPLayer() || moveAble.hasOwnProperty(right.type.toString())) {
+        if (right.type === this.model.getCurrentPlayer() || moveAble.hasOwnProperty(right.type.toString())) {
             return [...this.checkRightRecursive(right.x, right.y), [spritex, spritey]];
         }
 
